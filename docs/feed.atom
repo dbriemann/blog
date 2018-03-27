@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Of Unproven Words And Code</title>
   <id>https//dbriemann.github.io/blog</id>
-  <updated>2018-03-27T12:08:57+02:00</updated>
+  <updated>2018-03-27T16:23:16+02:00</updated>
   <subtitle>A blog by David Linus Briemann, professional software engineer and hobby game dev</subtitle>
   <link href="https//dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
     <email>ragingdave@mailbox.org</email>
   </author>
+  <entry>
+    <title>Glyph Theme Test Issue</title>
+    <updated>2018-03-27T13:21:26Z</updated>
+    <id>tag:,2018-03-27:https//dbriemann.github.io/blog/1-glyph-theme-test-issue.html</id>
+    <link href="https//dbriemann.github.io/blog/1-glyph-theme-test-issue.html" rel="alternate"></link>
+    <summary type="html">While being the first issue of this blog this entry exists just to demonstrate the currently applied &lt;a href=&#34;https://github.com/dbriemann/glyph&#34; rel=&#34;nofollow&#34;&gt;Glyph&lt;/a&gt; theme. The content shown in this issue is taken from &lt;a href=&#34;https://gist.github.com/jonschlinkert/5854601&#34; rel=&#34;nofollow&#34;&gt;here&lt;/a&gt; and aims to provide a complete markdown overview.</summary>
+    <author>
+      <name>David Linus Briemann</name>
+      <email>ragingdave@mailbox.org</email>
+    </author>
+  </entry>
 </feed>
