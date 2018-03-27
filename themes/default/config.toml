@@ -12,4 +12,4 @@ OtherTemplates = [
 ]
 
 [Custom]
-About = { Name = "About", Link = "https://your.homepage.link.here" }
+About = { Name = "About", Link = "https://dbriemann.github.io" }
