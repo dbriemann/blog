@@ -1,0 +1,691 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Glyph Theme Test Issue - Of Unproven Words And Code</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="tachyons.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mw8 center pa2 sans-serif">
+	<header class="mb5">
+		<nav class="border-box w-100 db dt-l pt3 bb bw1 b--orange">
+			<a class="db dtc-l v-mid w-100 w-75-l no-underline" href="blog">
+				<h1 class="fw7 f1 measure mb3 mt3 navy tracked-tight tc tl-l">Of Unproven Words And Code</h1>
+			</a>
+			<div class="db dtc-l v-mid w-100 w-25-l tc tr-l">
+				<a class="pr3 no-underline f3 fw7 blue dim" href=https://dbriemann.github.io>About</a>
+				<a class="no-underline f3 fw7 blue dim" href="feed.atom">Feed</a>
+			</div>
+		</nav>
+		<p class="mt1 o-60">A blog by David Linus Briemann, professional software engineer and hobby game dev</p>
+	</header>
+	<main>
+    <article>
+        <h1>Glyph Theme Test Issue</h2>
+        <p><p>While being the first issue of this blog this entry exists just to demonstrate the currently applied <a href="https://github.com/dbriemann/glyph" rel="nofollow">Glyph</a> theme. The content shown in this issue is taken from <a href="https://gist.github.com/jonschlinkert/5854601" rel="nofollow">here</a> and aims to provide a complete markdown overview.</p>
+<h1><a name="typography" class="anchor" href="#typography" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Typography</h1>
+<h2><a name="headings" class="anchor" href="#headings" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Headings</h2>
+
+<p>Headings from <code>h1</code> through <code>h6</code> are constructed with a <code>#</code> for each level:</p>
+
+<div class="highlight highlight-markdown"><pre># h1 Heading
+## h2 Heading
+### h3 Heading
+#### h4 Heading
+##### h5 Heading
+###### h6 Heading
+</pre></div>
+
+<p>Renders to:</p>
+<h1><a name="h1-heading" class="anchor" href="#h1-heading" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+h1 Heading</h1>
+<h2><a name="h2-heading" class="anchor" href="#h2-heading" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+h2 Heading</h2>
+<h3><a name="h3-heading" class="anchor" href="#h3-heading" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+h3 Heading</h3>
+<h4><a name="h4-heading" class="anchor" href="#h4-heading" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+h4 Heading</h4>
+<h5><a name="h5-heading" class="anchor" href="#h5-heading" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+h5 Heading</h5>
+<h6><a name="h6-heading" class="anchor" href="#h6-heading" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+h6 Heading</h6>
+
+<p>HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;h1&gt;h1 Heading&lt;/h1&gt;
+&lt;h2&gt;h2 Heading&lt;/h2&gt;
+&lt;h3&gt;h3 Heading&lt;/h3&gt;
+&lt;h4&gt;h4 Heading&lt;/h4&gt;
+&lt;h5&gt;h5 Heading&lt;/h5&gt;
+&lt;h6&gt;h6 Heading&lt;/h6&gt;
+</pre></div>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="horizontal-rules" class="anchor" href="#horizontal-rules" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Horizontal Rules</h2>
+
+<p>The HTML <code>&lt;hr&gt;</code> element is for creating a &#34;thematic break&#34; between paragraph-level elements. In markdown, you can create a <code>&lt;hr&gt;</code> with any of the following:</p>
+
+<ul>
+<li><code>___</code>: three consecutive underscores</li>
+<li><code>---</code>: three consecutive dashes</li>
+<li><code>***</code>: three consecutive asterisks</li>
+</ul>
+
+<p>renders to:</p>
+
+<hr>
+
+<hr>
+
+<hr>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="body-copy" class="anchor" href="#body-copy" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Body Copy</h2>
+
+<p>Body copy written as normal, plain text will be wrapped with <code>&lt;p&gt;&lt;/p&gt;</code> tags in the rendered HTML.</p>
+
+<p>So this body copy:</p>
+
+<div class="highlight highlight-markdown"><pre>Lorem ipsum dolor sit amet, graecis denique ei vel, at duo primis mandamus. Et legere ocurreret pri, animal tacimates complectitur ad cum. Cu eum inermis inimicus efficiendi. Labore officiis his ex, soluta officiis concludaturque ei qui, vide sensibus vim ad.
+</pre></div>
+
+<p>renders to this HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;p&gt;Lorem ipsum dolor sit amet, graecis denique ei vel, at duo primis mandamus. Et legere ocurreret pri, animal tacimates complectitur ad cum. Cu eum inermis inimicus efficiendi. Labore officiis his ex, soluta officiis concludaturque ei qui, vide sensibus vim ad.&lt;/p&gt;
+</pre></div>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="emphasis" class="anchor" href="#emphasis" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Emphasis</h2>
+<h3><a name="bold" class="anchor" href="#bold" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Bold</h3>
+
+<p>For emphasizing a snippet of text with a heavier font-weight.</p>
+
+<p>The following snippet of text is <strong>rendered as bold text</strong>.</p>
+
+<div class="highlight highlight-markdown"><pre>**rendered as bold text**
+</pre></div>
+
+<p>renders to:</p>
+
+<p><strong>rendered as bold text</strong></p>
+
+<p>and this HTML</p>
+
+<div class="highlight highlight-html"><pre>&lt;strong&gt;rendered as bold text&lt;/strong&gt;
+</pre></div>
+<h3><a name="italics" class="anchor" href="#italics" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Italics</h3>
+
+<p>For emphasizing a snippet of text with italics.</p>
+
+<p>The following snippet of text is <em>rendered as italicized text</em>.</p>
+
+<div class="highlight highlight-markdown"><pre>_rendered as italicized text_
+</pre></div>
+
+<p>renders to:</p>
+
+<p><em>rendered as italicized text</em></p>
+
+<p>and this HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;em&gt;rendered as italicized text&lt;/em&gt;
+</pre></div>
+<h3><a name="strikethrough" class="anchor" href="#strikethrough" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+strikethrough</h3>
+
+<p>In GFM you can do strickthroughs.</p>
+
+<div class="highlight highlight-markdown"><pre>~~Strike through this text.~~
+</pre></div>
+
+<p>Which renders to:</p>
+
+<p><del>Strike through this text.</del></p>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="blockquotes" class="anchor" href="#blockquotes" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Blockquotes</h2>
+
+<p>For quoting blocks of content from another source within your document.</p>
+
+<p>Add <code>&gt;</code> before any text you want to quote.</p>
+
+<div class="highlight highlight-markdown"><pre>Add `&gt;` before any text you want to quote. 
+</pre></div>
+
+<p>Renders to:</p>
+
+<blockquote>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+</blockquote>
+
+<p>and this HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;blockquote&gt;
+  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.&lt;/p&gt;
+&lt;/blockquote&gt;
+</pre></div>
+
+<p>Blockquotes can also be nested:</p>
+
+<div class="highlight highlight-markdown"><pre>&gt; Donec massa lacus, ultricies a ullamcorper in, fermentum sed augue. 
+Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi. 
+&gt;&gt; Sed adipiscing elit vitae augue consectetur a gravida nunc vehicula. Donec auctor 
+odio non est accumsan facilisis. Aliquam id turpis in dolor tincidunt mollis ac eu diam.
+&gt;&gt;&gt; Donec massa lacus, ultricies a ullamcorper in, fermentum sed augue. 
+Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi. 
+</pre></div>
+
+<p>Renders to:</p>
+
+<blockquote>
+<p>Donec massa lacus, ultricies a ullamcorper in, fermentum sed augue.
+Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi.</p>
+
+<blockquote>
+<p>Sed adipiscing elit vitae augue consectetur a gravida nunc vehicula. Donec auctor
+odio non est accumsan facilisis. Aliquam id turpis in dolor tincidunt mollis ac eu diam.</p>
+
+<blockquote>
+<p>Donec massa lacus, ultricies a ullamcorper in, fermentum sed augue.
+Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="lists" class="anchor" href="#lists" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Lists</h2>
+<h3><a name="unordered" class="anchor" href="#unordered" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Unordered</h3>
+
+<p>A list of items in which the order of the items does not explicitly matter.</p>
+
+<p>You may use any of the following symbols to denote bullets for each list item:</p>
+
+<div class="highlight highlight-markdown"><pre>* valid bullet
+- valid bullet
++ valid bullet
+</pre></div>
+
+<p>For example</p>
+
+<div class="highlight highlight-markdown"><pre>+ Lorem ipsum dolor sit amet
++ Consectetur adipiscing elit
++ Integer molestie lorem at massa
++ Facilisis in pretium nisl aliquet
++ Nulla volutpat aliquam velit
+  - Phasellus iaculis neque
+  - Purus sodales ultricies
+  - Vestibulum laoreet porttitor sem
+  - Ac tristique libero volutpat at
++ Faucibus porta lacus fringilla vel
++ Aenean sit amet erat nunc
++ Eget porttitor lorem
+</pre></div>
+
+<p>Renders to:</p>
+
+<ul>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit
+
+<ul>
+<li>Phasellus iaculis neque</li>
+<li>Purus sodales ultricies</li>
+<li>Vestibulum laoreet porttitor sem</li>
+<li>Ac tristique libero volutpat at</li>
+</ul></li>
+<li>Faucibus porta lacus fringilla vel</li>
+<li>Aenean sit amet erat nunc</li>
+<li>Eget porttitor lorem</li>
+</ul>
+
+<p>And this HTML</p>
+
+<div class="highlight highlight-html"><pre>&lt;ul&gt;
+  &lt;li&gt;Lorem ipsum dolor sit amet&lt;/li&gt;
+  &lt;li&gt;Consectetur adipiscing elit&lt;/li&gt;
+  &lt;li&gt;Integer molestie lorem at massa&lt;/li&gt;
+  &lt;li&gt;Facilisis in pretium nisl aliquet&lt;/li&gt;
+  &lt;li&gt;Nulla volutpat aliquam velit
+    &lt;ul&gt;
+      &lt;li&gt;Phasellus iaculis neque&lt;/li&gt;
+      &lt;li&gt;Purus sodales ultricies&lt;/li&gt;
+      &lt;li&gt;Vestibulum laoreet porttitor sem&lt;/li&gt;
+      &lt;li&gt;Ac tristique libero volutpat at&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Faucibus porta lacus fringilla vel&lt;/li&gt;
+  &lt;li&gt;Aenean sit amet erat nunc&lt;/li&gt;
+  &lt;li&gt;Eget porttitor lorem&lt;/li&gt;
+&lt;/ul&gt;
+</pre></div>
+<h3><a name="ordered" class="anchor" href="#ordered" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Ordered</h3>
+
+<p>A list of items in which the order of items does explicitly matter.</p>
+
+<div class="highlight highlight-markdown"><pre>1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
+4. Facilisis in pretium nisl aliquet
+5. Nulla volutpat aliquam velit
+6. Faucibus porta lacus fringilla vel
+7. Aenean sit amet erat nunc
+8. Eget porttitor lorem
+</pre></div>
+
+<p>Renders to:</p>
+
+<ol>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit</li>
+<li>Faucibus porta lacus fringilla vel</li>
+<li>Aenean sit amet erat nunc</li>
+<li>Eget porttitor lorem</li>
+</ol>
+
+<p>And this HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;ol&gt;
+  &lt;li&gt;Lorem ipsum dolor sit amet&lt;/li&gt;
+  &lt;li&gt;Consectetur adipiscing elit&lt;/li&gt;
+  &lt;li&gt;Integer molestie lorem at massa&lt;/li&gt;
+  &lt;li&gt;Facilisis in pretium nisl aliquet&lt;/li&gt;
+  &lt;li&gt;Nulla volutpat aliquam velit&lt;/li&gt;
+  &lt;li&gt;Faucibus porta lacus fringilla vel&lt;/li&gt;
+  &lt;li&gt;Aenean sit amet erat nunc&lt;/li&gt;
+  &lt;li&gt;Eget porttitor lorem&lt;/li&gt;
+&lt;/ol&gt;
+</pre></div>
+
+<p><strong>TIP</strong>: If you just use <code>1.</code> for each number, GitHub will automatically number each item. For example:</p>
+
+<div class="highlight highlight-markdown"><pre>1. Lorem ipsum dolor sit amet
+1. Consectetur adipiscing elit
+1. Integer molestie lorem at massa
+1. Facilisis in pretium nisl aliquet
+1. Nulla volutpat aliquam velit
+1. Faucibus porta lacus fringilla vel
+1. Aenean sit amet erat nunc
+1. Eget porttitor lorem
+</pre></div>
+
+<p>Renders to:</p>
+
+<ol>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit</li>
+<li>Faucibus porta lacus fringilla vel</li>
+<li>Aenean sit amet erat nunc</li>
+<li>Eget porttitor lorem</li>
+</ol>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="code" class="anchor" href="#code" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Code</h2>
+<h3><a name="inline-code" class="anchor" href="#inline-code" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Inline code</h3>
+
+<p>Wrap inline snippets of code with <code>`</code>.</p>
+
+<p>For example, <code>&lt;section&gt;&lt;/section&gt;</code> should be wrapped as &#34;inline&#34;.</p>
+
+<div class="highlight highlight-html"><pre>For example, `&lt;section&gt;&lt;/section&gt;` should be wrapped as &#34;inline&#34;.
+</pre></div>
+<h3><a name="indented-code" class="anchor" href="#indented-code" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Indented code</h3>
+
+<p>Or indent several lines of code by at least four spaces, as in:</p>
+
+<div class="highlight highlight-js"><pre>    // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+</pre></div>
+
+<pre><code>// Some comments
+line 1 of code
+line 2 of code
+line 3 of code
+</code></pre>
+<h3><a name="block-code-fences" class="anchor" href="#block-code-fences" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Block code &#34;fences&#34;</h3>
+
+<p>Use &#34;fences&#34;  <code>```</code> to block in multiple lines of code.</p>
+
+<pre>
+``` html
+Sample text here...
+```
+</pre>
+
+<pre><code>Sample text here...
+</code></pre>
+
+<p>HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;pre&gt;
+  &lt;p&gt;Sample text here...&lt;/p&gt;
+&lt;/pre&gt;
+</pre></div>
+<h3><a name="syntax-highlighting" class="anchor" href="#syntax-highlighting" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Syntax highlighting</h3>
+
+<p>GFM, or &#34;GitHub Flavored Markdown&#34; also supports syntax highlighting. To activate it, simply add the file extension of the language you want to use directly after the first code &#34;fence&#34;, `<code>js</code>, and syntax highlighting will automatically be applied in the rendered HTML. For example, to apply syntax highlighting to JavaScript code:</p>
+
+<pre>
+``` javascript
+grunt.initConfig({
+  assemble: {
+    options: {
+      assets: &#39;docs/assets&#39;,
+      data: &#39;src/data/*.{json,yml}&#39;,
+      helpers: &#39;src/custom-helpers.js&#39;,
+      partials: [&#39;src/partials/**/*.{hbs,md}&#39;]
+    },
+    pages: {
+      options: {
+        layout: &#39;default.hbs&#39;
+      },
+      files: {
+        &#39;./&#39;: [&#39;src/templates/pages/index.hbs&#39;]
+      }
+    }
+  }
+};
+```
+</pre>
+
+<p>Renders to:</p>
+
+<div class="highlight highlight-javascript"><pre>grunt.initConfig({
+  assemble: {
+    options: {
+      assets: &#39;docs/assets&#39;,
+      data: &#39;src/data/*.{json,yml}&#39;,
+      helpers: &#39;src/custom-helpers.js&#39;,
+      partials: [&#39;src/partials/**/*.{hbs,md}&#39;]
+    },
+    pages: {
+      options: {
+        layout: &#39;default.hbs&#39;
+      },
+      files: {
+        &#39;./&#39;: [&#39;src/templates/pages/index.hbs&#39;]
+      }
+    }
+  }
+};
+</pre></div>
+
+<p>And this complicated HTML:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nx&#34;&gt;grunt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;initConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;assemble&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;options&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;assets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&#39;docs/assets&#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&#39;src/data/*.{json,yml}&#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;helpers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&#39;src/custom-helpers.js&#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;partials&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&#39;src/partials/**/*.{hbs,md}&#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;pages&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;options&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nx&#34;&gt;layout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&#39;default.hbs&#39;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+      &lt;span class=&#34;nx&#34;&gt;files&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s1&#34;&gt;&#39;./&#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&#39;src/templates/pages/index.hbs&#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</pre></div>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="tables" class="anchor" href="#tables" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Tables</h2>
+
+<p>Tables are created by adding pipes as dividers between each cell, and by adding a line of dashes (also separated by bars) beneath the header. Note that the pipes do not need to be vertically aligned.</p>
+
+<div class="highlight highlight-markdown"><pre>| Option | Description |
+| ------ | ----------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+</pre></div>
+
+<p>Renders to:</p>
+
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>data</td>
+<td>path to data files to supply the data that will be passed into templates.</td>
+</tr>
+
+<tr>
+<td>engine</td>
+<td>engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+
+<tr>
+<td>ext</td>
+<td>extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+
+<p>And this HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Option&lt;/th&gt;
+    &lt;th&gt;Description&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;data&lt;/td&gt;
+    &lt;td&gt;path to data files to supply the data that will be passed into templates.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;engine&lt;/td&gt;
+    &lt;td&gt;engine to be used for processing templates. Handlebars is the default.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;ext&lt;/td&gt;
+    &lt;td&gt;extension to be used for dest files.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</pre></div>
+<h3><a name="right-aligned-text" class="anchor" href="#right-aligned-text" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Right aligned text</h3>
+
+<p>Adding a colon on the right side of the dashes below any heading will right align text for that column.</p>
+
+<div class="highlight highlight-markdown"><pre>| Option | Description |
+| ------:| -----------:|
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+</pre></div>
+
+<table>
+<thead>
+<tr>
+<th align="right">Option</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">data</td>
+<td align="right">path to data files to supply the data that will be passed into templates.</td>
+</tr>
+
+<tr>
+<td align="right">engine</td>
+<td align="right">engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+
+<tr>
+<td align="right">ext</td>
+<td align="right">extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="links" class="anchor" href="#links" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Links</h2>
+<h3><a name="basic-link" class="anchor" href="#basic-link" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Basic link</h3>
+
+<div class="highlight highlight-markdown"><pre>[Assemble](http://assemble.io)
+</pre></div>
+
+<p>Renders to (hover over the link, there is no tooltip):</p>
+
+<p><a href="http://assemble.io" rel="nofollow">Assemble</a></p>
+
+<p>HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;a href=&#34;http://assemble.io&#34;&gt;Assemble&lt;/a&gt;
+</pre></div>
+<h3><a name="add-a-title" class="anchor" href="#add-a-title" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Add a title</h3>
+
+<div class="highlight highlight-markdown"><pre>[Upstage](https://github.com/upstage/ &#34;Visit Upstage!&#34;)
+</pre></div>
+
+<p>Renders to (hover over the link, there should be a tooltip):</p>
+
+<p><a href="https://github.com/upstage/" title="Visit Upstage!" rel="nofollow">Upstage</a></p>
+
+<p>HTML:</p>
+
+<div class="highlight highlight-html"><pre>&lt;a href=&#34;https://github.com/upstage/&#34; title=&#34;Visit Upstage!&#34;&gt;Upstage&lt;/a&gt;
+</pre></div>
+<h3><a name="named-anchors" class="anchor" href="#named-anchors" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Named Anchors</h3>
+
+<p>Named anchors enable you to jump to the specified anchor point on the same page. For example, each of these chapters:</p>
+
+<div class="highlight highlight-markdown"><pre># Table of Contents
+  * [Chapter 1](#chapter-1)
+  * [Chapter 2](#chapter-2)
+  * [Chapter 3](#chapter-3)
+</pre></div>
+
+<p>will jump to these sections:</p>
+
+<div class="highlight highlight-markdown"><pre>## Chapter 1 &lt;a id=&#34;chapter-1&#34;&gt;&lt;/a&gt;
+Content for chapter one.
+
+## Chapter 2 &lt;a id=&#34;chapter-2&#34;&gt;&lt;/a&gt;
+Content for chapter one.
+
+## Chapter 3 &lt;a id=&#34;chapter-3&#34;&gt;&lt;/a&gt;
+Content for chapter one.
+</pre></div>
+
+<p><strong>NOTE</strong> that specific placement of the anchor tag seems to be arbitrary. They are placed inline here since it seems to be unobtrusive, and it works.</p>
+
+<p><br>
+<br>
+<br></p>
+<h2><a name="images" class="anchor" href="#images" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Images</h2>
+
+<p>Images have a similar syntax to links but include a preceding exclamation point.</p>
+
+<div class="highlight highlight-markdown"><pre>![Minion](http://octodex.github.com/images/minion.png)
+</pre></div>
+
+<p><img src="http://octodex.github.com/images/minion.png" alt="Minion"></p>
+
+<p>or</p>
+
+<div class="highlight highlight-markdown"><pre>![Alt text](http://octodex.github.com/images/stormtroopocat.jpg &#34;The Stormtroopocat&#34;)
+</pre></div>
+
+<p><img src="http://octodex.github.com/images/stormtroopocat.jpg" alt="Alt text" title="The Stormtroopocat"></p>
+
+<p>Like links, Images also have a footnote style syntax</p>
+
+<div class="highlight highlight-markdown"><pre>![Alt text][id]
+</pre></div>
+
+<p><img src="http://octodex.github.com/images/dojocat.jpg" alt="Alt text" title="The Dojocat"></p>
+
+<p>With a reference later in the document defining the URL location:</p>
+
+<pre><code>[id]: http://octodex.github.com/images/dojocat.jpg  &#34;The Dojocat&#34;
+</code></pre>
+</p>
+        <p><a class="orange no-underline dim" href="https://github.com/dbriemann/blog/issues/1">Discuss at Github</a></p>
+    </article>
+</main>
+
+	<footer class="border-box w-100 db dt-l mt5 mb4 bt bw1 b--orange pt2 f6">
+		<div class="db dtc-l v-mid w-100 w-50-l">
+			<span class="navy">&copy; 2018 David Linus Briemann</span>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="https://twitter.com/Raging_Dave">@Raging_Dave</a>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="mailto:ragingdave@mailbox.org" target="_top">ragingdave@mailbox.org</a>
+		</div>
+		<div class="db dtc-l v-mid w-100 w-50-l tc tr-l">
+			<span class="navy">This blog is powered by</span>
+			<a class="no-underline blue" href="https://github.com/dbriemann/glyph">Glyph</a>
+		</div>
+		<div></div>
+	</footer>
+</body>
+
+</html>
