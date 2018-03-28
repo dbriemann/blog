@@ -12,7 +12,7 @@ Name = "blog"
 [Site]
 Title = "Of Unproven Words And Code"
 Author = "David Linus Briemann"
-OneLineDesc = "A blog by David Linus Briemann, professional software engineer and hobby game dev"
+OneLineDesc = "A blog about solo game development and coding in general"
 Twitter = "Raging_Dave"
 Mail = "ragingdave@mailbox.org"
 # in the theme folder there is a theme.toml which specifies theme specific pages
