@@ -1,0 +1,102 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Introducing Glyph: Static Site Generator Powered by Github Issues and Pages - Of Unproven Words And Code</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="tachyons.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mw8 center pa2 sans-serif">
+	<header class="mb5">
+		<nav class="border-box w-100 db dt-l pt3 bb bw1 b--orange">
+			<a class="db dtc-l v-mid w-100 w-75-l no-underline" href="/blog">
+				<h1 class="fw7 f1 measure mb3 mt3 navy tracked-tight tc tl-l">Of Unproven Words And Code</h1>
+			</a>
+			<div class="db dtc-l v-mid w-100 w-25-l tc tr-l">
+				<a class="pr3 no-underline f3 fw7 blue dim" href=https://dbriemann.github.io>About</a>
+				<a class="no-underline f3 fw7 blue dim" href="feed.atom">Feed</a>
+			</div>
+		</nav>
+		<p class="mt1 o-60">A blog about solo game development and coding in general</p>
+	</header>
+	<main>
+    <article>
+        <h1>Introducing Glyph: Static Site Generator Powered by Github Issues and Pages</h2>
+        <p><html><head></head><body><p>Another blog and another static site generator? In 2018? I know what you think but please read a few lines first if you made it this far. This one is a little different from previous static site generators.. I promise! <strong>Oh and by the way, you are just reading a Github issue!</strong></p>
+
+<p>First of all, the best time to start a blog must be when you release a static site generator.. so hey.. <strong>hello world</strong>! I will be writing occasionally about coding topics that I deem interesting and especially about making indie games as a solo-dev. As you might have realized this time it is not about games.. so what is it all about?</p>
+<h1><a name="glyph-glyph-zero" class="anchor" href="#glyph-glyph-zero" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Glyph &amp; Glyph-Zero</h1>
+
+<p>I just released the beta of <a href="https://github.com/dbriemann/glyph" rel="nofollow">glyph</a>. It utilizes the great ecosystem of Github Pages and Github issues to author, export and host a static site. Tightly coupled with it is <a href="https://github.com/dbriemann/glyph-zero" rel="nofollow">glyph-zero</a> which is the origin template for all glyph powered sites.</p>
+
+<ul>
+<li>Glyph is the command that generates a static site from a glyph-zero template.</li>
+<li>Glyph-zero is a template, ready to be forked, that includes all configs and themes needed for a glyph powered blog.</li>
+</ul>
+<h2><a name="motivation" class="anchor" href="#motivation" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Motivation</h2>
+
+<p>I got inspired by <a href="https://github.com/SSYGEN/blog/issues" rel="nofollow">this blog</a> which is entirely hosted on Github issues. At first I was a little confused because that is not the typical use case for issues. However there are clear benefits to it:</p>
+
+<ol>
+<li>You have a great comment system just available without doing any extra work or creating new accounts.</li>
+<li>You can write your blog posts in markdown which is simple and offers enough styling for a blog.</li>
+<li>You can write the markdown directly in your browser in Github&#39;s great markdown editor, with live preview.</li>
+<li>You can mention people on Github in the issues(posts) and the comments.</li>
+</ol>
+
+<p>After presenting you the benefits there are also some drawbacks:</p>
+
+<ol>
+<li>You cannot change your blog&#39;s style. Github issues doesn&#39;t look too bad but maybe you don&#39;t like it or want a personal touch.</li>
+<li>You cannot track people with Google Analytics or use other scripts. I personally am not a big fan of this in the context of a blog but the option is somehow important for people.</li>
+<li>You cannot fork the issues and thereby create a <em>backup</em> of the content. A blog hosted on Github pages offers this option.</li>
+<li>You cannot use a feed reader to follow one single repository and the attached issues (not 100% sure about this).</li>
+</ol>
+<h2><a name="how-it-works" class="anchor" href="#how-it-works" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+How it works</h2>
+
+<p>Glyph removes all of those drawbacks for you. It renders all of your open issues from one repository (your blog/site) to HTML and places them in your docs/ folder inside the repository. You then commit and push them all to Github and voila.. your site is published on Github pages with a custom theme and the content extracted from your issues. In addition an Atom feed file is generated and a link is ready to take the viewer to the comments section (on Github) of the issue for discussions. All links that point to other issues of the same repository are converted to links inside the blog, e.g. <a href="1-glyph-theme-test-issue.html" rel="nofollow">https://github.com/dbriemann/blog/issues/1</a> is now an internal link.</p>
+
+<p>While glyph aims to be as simple as possible it allows you to fully customize your styling and scripts. glyph uses the <a href="http://mustache.github.io/mustache.5.html" rel="nofollow">mustache</a> templating system. The default theme is used on this very blog. I&#39;m not a designer but I gave my best here. If you make a new theme or improve upon the default theme please contact me or send a pull request on Github!</p>
+
+<p><strong>All instructions on how to use glyph can be found in the <a href="https://github.com/dbriemann/glyph-zero" rel="nofollow">glyph-zero readme</a>.</strong> It is a very simple and straight process so give it a try!</p>
+<h2><a name="what-s-next" class="anchor" href="#what-s-next" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+What&#39;s Next?</h2>
+
+<ul>
+<li>First I want to add syntax coloring for markdown code blocks. This will probably be a rather simple addition to glyph and an option in the config file.</li>
+<li>A bigger thing will be the integration of Github comments into the generated site. My current idea is a (java)script that fetches all comments from Github and displays them on the site. The benefit of this is obviously that we have the same theme/style for comments and content. However I will need to ponder on this for a little longer.</li>
+<li>Another big one is supporting Travis on glyph-zero. The ideal scenario would be that Travis auto builds the blog as soon as an issue is created or updated and pushes the generated files into the repo. I am not sure if that works but I will investigate sooner or later. If this works we don&#39;t need to do anything on a local machine. The repo can be forked, the config files can be edited on Github and then it would just be about creating and maintaining content within the Github ecosystem.</li>
+<li>I may add support for Github Access Tokens again. I removed that feature in the beginning to keep everything simple but maybe it will be needed for future features. Currently you don&#39;t need a token because Github allows 60 API queries each hour from an unauthed source.</li>
+</ul>
+
+<p>I am also open to ideas/improvements from you readers. Contribution of any kind is very welcome. Just keep in mind that glyph intends to stay <strong>easy for the user</strong>. Currently the glyph command has no options at all and I like it that way.</p>
+</body></html></p>
+        <p><a class="b f6 link dim br2 ph3 pv2 mb2 dib white bg-orange" href="https://github.com/dbriemann/blog/issues/2">Discuss at Github</a></p>
+    </article>
+</main>
+
+	<footer class="border-box w-100 db dt-l mt5 mb4 bt bw1 b--orange pt2 f6">
+		<div class="db dtc-l v-mid w-100 w-50-l">
+			<span class="navy">&copy; 2018 David Linus Briemann</span>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="https://twitter.com/Raging_Dave">@Raging_Dave</a>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="mailto:ragingdave@mailbox.org" target="_top">ragingdave@mailbox.org</a>
+		</div>
+		<div class="db dtc-l v-mid w-100 w-50-l tc tr-l">
+			<span class="navy">This blog is powered by</span>
+			<a class="no-underline blue" href="https://github.com/dbriemann/glyph">Glyph</a>
+		</div>
+		<div></div>
+	</footer>
+</body>
+
+</html>
