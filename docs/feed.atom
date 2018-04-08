@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Of Unproven Words And Code</title>
-  <id>https//dbriemann.github.io/blog</id>
-  <updated>2018-04-06T18:10:50+02:00</updated>
+  <id>https://dbriemann.github.io/blog</id>
+  <updated>2018-04-08T15:26:25+02:00</updated>
   <subtitle>A blog about solo game development and coding in general</subtitle>
-  <link href="https//dbriemann.github.io/blog"></link>
+  <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
     <email>ragingdave@mailbox.org</email>
@@ -11,8 +11,8 @@
   <entry>
     <title>Introducing Glyph: Static Site Generator Powered by Github Issues and Pages</title>
     <updated>2018-04-06T16:08:58Z</updated>
-    <id>tag:,2018-04-06:https//dbriemann.github.io/blog/2-introducing-glyph-static-site-generator-powered-by-github-issues-and-pages.html</id>
-    <link href="https//dbriemann.github.io/blog/2-introducing-glyph-static-site-generator-powered-by-github-issues-and-pages.html" rel="alternate"></link>
+    <id>tag:dbriemann.github.io,2018-04-06:/blog/2-introducing-glyph-static-site-generator-powered-by-github-issues-and-pages.html</id>
+    <link href="https://dbriemann.github.io/blog/2-introducing-glyph-static-site-generator-powered-by-github-issues-and-pages.html" rel="alternate"></link>
     <summary type="html">Another blog and another static site generator? In 2018? I know what you think but please read a few lines first if you made it this far. This one is a little different from previous static site generators.. I promise! &lt;strong&gt;Oh and by the way, you are just reading a Github issue!&lt;/strong&gt;</summary>
     <author>
       <name>David Linus Briemann</name>
@@ -22,8 +22,8 @@
   <entry>
     <title>Glyph Theme Test Issue</title>
     <updated>2018-03-27T13:21:26Z</updated>
-    <id>tag:,2018-03-27:https//dbriemann.github.io/blog/1-glyph-theme-test-issue.html</id>
-    <link href="https//dbriemann.github.io/blog/1-glyph-theme-test-issue.html" rel="alternate"></link>
+    <id>tag:dbriemann.github.io,2018-03-27:/blog/1-glyph-theme-test-issue.html</id>
+    <link href="https://dbriemann.github.io/blog/1-glyph-theme-test-issue.html" rel="alternate"></link>
     <summary type="html">While being the first issue of this blog this entry exists just to demonstrate the currently applied &lt;a href=&#34;https://github.com/dbriemann/glyph&#34; rel=&#34;nofollow&#34;&gt;Glyph&lt;/a&gt; theme. The content shown in this issue is taken from &lt;a href=&#34;https://gist.github.com/jonschlinkert/5854601&#34; rel=&#34;nofollow&#34;&gt;here&lt;/a&gt; and aims to provide a complete markdown overview.</summary>
     <author>
       <name>David Linus Briemann</name>
