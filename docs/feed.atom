@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Of Unproven Words And Code</title>
   <id>https://dbriemann.github.io/blog</id>
-  <updated>2018-04-08T15:26:25+02:00</updated>
+  <updated>2018-04-22T19:18:53+02:00</updated>
   <subtitle>A blog about solo game development and coding in general</subtitle>
   <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
     <email>ragingdave@mailbox.org</email>
   </author>
+  <entry>
+    <title>Making a game with Go: #0 Introduction</title>
+    <updated>2018-04-22T17:18:43Z</updated>
+    <id>tag:dbriemann.github.io,2018-04-22:/blog/4-making-a-game-with-go-0-introduction.html</id>
+    <link href="https://dbriemann.github.io/blog/4-making-a-game-with-go-0-introduction.html" rel="alternate"></link>
+    <summary type="html">This is an introductory issue about the goals, choices and challenges of my new quest: making a game in Linux with a framework and not an engine. Here in issue #0 I will explain the whys, the hows and the don&amp;#39;ts and &lt;strong&gt;starting from the next issue I will write a tutorial alongside an open source game hosted on Github&lt;/strong&gt;. I hope you follow me along.</summary>
+    <author>
+      <name>David Linus Briemann</name>
+      <email>ragingdave@mailbox.org</email>
+    </author>
+  </entry>
   <entry>
     <title>Introducing Glyph: Static Site Generator Powered by Github Issues and Pages</title>
     <updated>2018-04-06T16:08:58Z</updated>

@@ -1,0 +1,150 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Making a game with Go: #0 Introduction - Of Unproven Words And Code</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="tachyons.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mw8 center pa2 sans-serif">
+	<header class="mb5">
+		<nav class="border-box w-100 db dt-l pt3 bb bw1 b--orange">
+			<a class="db dtc-l v-mid w-100 w-75-l no-underline" href="/blog">
+				<h1 class="fw7 f1 measure mb3 mt3 navy tracked-tight tc tl-l">Of Unproven Words And Code</h1>
+			</a>
+			<div class="db dtc-l v-mid w-100 w-25-l tc tr-l">
+				<a class="pr3 no-underline f3 fw7 blue dim" href=https://dbriemann.github.io>About</a>
+				<a class="no-underline f3 fw7 blue dim" href="feed.atom">Feed</a>
+			</div>
+		</nav>
+		<p class="mt1 o-60">A blog about solo game development and coding in general</p>
+	</header>
+	<main>
+    <article>
+        <h1>Making a game with Go: #0 Introduction</h2>
+        <p><html><head></head><body><p>This is an introductory issue about the goals, choices and challenges of my new quest: making a game in Linux with a framework and not an engine. Here in issue #0 I will explain the whys, the hows and the don&#39;ts and <strong>starting from the next issue I will write a tutorial alongside an open source game hosted on Github</strong>. I hope you follow me along.</p>
+<h2><a name="audience" class="anchor" href="#audience" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Audience</h2>
+
+<p>You should be interested in making a game in Go. You should also be able to code. I won&#39;t teach coding basics. If you don&#39;t know Go but another language you should be fine. Go is easy to pick up. If you are still interested, just give it a shot, it&#39;s free ;).</p>
+<h2><a name="motivation" class="anchor" href="#motivation" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Motivation</h2>
+
+<p>The process of creating software can be very satisfying and creative. Especially making a game is a creative endeavor. I grew up with the very simple games such as Pacman and Tetris. Back then as a kid I made my own simple games with Quick Basic and Turbo Pascal. Of course they were <em>not great</em> but I learned a lot and it was as much fun as playing games.</p>
+
+<p>Later as a student I made more games. They still were <em>not great</em> but a lot better than my previous ones. Over the years I attempted to make several games but I never completed them. They were either to big in scope or their core idea didn&#39;t convince me enough to keep going.</p>
+
+<p>Today I have a clear plan. I want to make a game again. I want to finish it and it should be small in scope but fun to play: a coffee break game with some potential. And as additional way to stay motivated I will blog about it and maybe someone can learn a thing or two (myself included).</p>
+<h3><a name="so-what-s-it-gonna-be" class="anchor" href="#so-what-s-it-gonna-be" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+So what&#39;s it gonna be?</h3>
+
+<p>I will steal the core idea of another game and then go from there and inject my own ideas into it. Wait isn&#39;t this really cheap and shouldn&#39;t I think of my own idea? Maybe but I don&#39;t think so. Practically every game steals ideas from other games. You wouldn&#39;t consider Half Life a clone of Doom would you?</p>
+
+<p>Also I will give proper credit to my inspiration: the game in question is <a href="http://anthony.liekens.net/index.php/Computers/Qonk" rel="nofollow">Qonk</a>.</p>
+
+<p><img src="http://anthony.liekens.net/images/qonk_legend.png" alt="Qonk Legend"/></p>
+
+<p>It is a very simple real-time strategy space game. You start with a planet that is constantly producing ships. You can send these ships to conquer other planets to increase your total ship production and hopefully conquer the whole galaxy. Your enemies (AI) try exactly the same thing and thus counteract you. A game that is very similar in its design is Galcon with the main difference that in Galcon planets don&#39;t move and its main focus is on multi-player.</p>
+
+<p>Now the key concepts I want to <em>steal</em> from Qonk are:</p>
+
+<ul>
+<li>a galaxy which fits onto a single screen</li>
+<li>orbiting planets</li>
+<li>an AI to play against (multi-player is not in the scope of the tutorial)</li>
+<li>automatic production of units / resources.</li>
+</ul>
+
+<p>The following ideas I had may be crap or out of scope but for completeness I will list all of them:</p>
+
+<ul>
+<li>add resources to the game</li>
+<li>have different types of planets</li>
+<li>add a tech tree / research that can improve resource gain, production or ship toughness / firepower</li>
+<li>add cool graphical effects / shaders</li>
+<li>add powerups that can be captured by ships and have to be escorted to a home planet</li>
+<li>add an idle game mechanic: e.g. resource production continues from quitting / saving the game to continuing it</li>
+</ul>
+
+<p>I will certainly have more ideas later on and also most of them won&#39;t make it into the game. But it&#39;s always good to have a list!</p>
+
+<p>As a last note on this topic let me say that this game won&#39;t have hand-made sprites. I will focus on geometric shapes and procedurally generated assets. I will have to find free music and audio effects on the internet. If you know good sources please tell me.</p>
+<h2><a name="the-tech-stack" class="anchor" href="#the-tech-stack" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+The tech stack</h2>
+
+<p>These days there are so many tools and libraries and engines to help you make a game. And a lot of them are even free. The hard part now is deciding on one and committing to it. Every developer and every game have different needs but for me it cannot be a full-blown engine. I am a coder and I don&#39;t want to learn more GUIs. I don&#39;t want to fiddle with scene graphs and attach code to some sprite node with drag&#39;n&#39;drop or whatever. That&#39;s why I always knew that I can skip Unity, Unreal, Godot and similar products.</p>
+
+<p>The programming language is of course another important choice. One obviously should pick what he likes and has experience with. Also the ability to build for many platforms is pretty important for me personally. In the beginning I considered the following frameworks or libraries for my project.</p>
+
+<ul>
+<li><a href="https://love2d.org/" rel="nofollow">Löve</a> (Lua)</li>
+<li><a href="http://www.monogame.net/" rel="nofollow">Monogame</a> (C#)</li>
+<li><a href="http://www.openfl.org/" rel="nofollow">OpenFL</a> (Haxe)</li>
+</ul>
+
+<p>All of those are good frameworks. However I came to the conclusion that I don&#39;t want to deal with those languages for different reasons. I have used Löve and Lua in the past and it&#39;s a really good experience but I prefer compiled languages.</p>
+
+<p>Now meet my pick: Raylib.</p>
+<h3><a name="raylib-c-c-go-or-other-languages-via-bindings" class="anchor" href="#raylib-c-c-go-or-other-languages-via-bindings" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a href="http://www.raylib.com/" rel="nofollow">Raylib</a> (C / C++ / Go or other languages via bindings)</h3>
+
+<p>Raylib is a C library that aims to be simple to use and minimizes its dependencies. It is easy to build for most platforms because of the low dependency count. Ray (the creator and maintainer) is super active and knows what he&#39;s doing. Also he is very helpful and teaches students to make games. There are bindings for a few more languages maintained by other developers.</p>
+
+<p>I am quite proficient with C / C++ but my language of choice has been Go over the last few years. Gladly there are bindings for go: <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a>. My plan is to use raylib-go for this project and if there should be unexpected problems with it I can port my game back to original Raylib without too much trouble. I have also created a little particle system in Raylib before: <a href="https://github.com/dbriemann/libpartikel" rel="nofollow">libpartikel</a>. So I already know something about Raylib&#39;s very nice API.</p>
+
+<p>The Raylib community is still small but constantly growing and I am confident that potential problems can be figured out via the Discord channel or Github issues.</p>
+<h3><a name="why-go" class="anchor" href="#why-go" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Why Go?</h3>
+
+<p>As I already said Go is my language of choice but I also think that it is great for making games. It has a C-like simplicity but compared to C it has a great standard library. Go uses composition instead of inheritance which is just perfect for games (see entity component systems). It can cross compile to various platforms with ease. Go has a bright future ahead of it. It is very actively developed but <em>new</em> features have to really add value to be added to the language. This is a good way to avoid becoming an ugly messy bloated language (sorry Java). Of course there are currently no generics but that&#39;s another discussion. The next version of Go (1.11) should add a WebAssembly (wasm) target to the go compiler. Now that&#39;s awesome too.</p>
+
+<p>Now you say: &#34;But it has a garbage collector!&#34;. Yea that&#39;s right. That can be a bummer for some games, especially for AAA ego shooters. It&#39;s a good thing I won&#39;t make such games. Most games today will do just fine with a garbage collected language. However you should not write crappy code and just allocate new objects like a madman while throwing the old ones to big bad GC.</p>
+
+<p>The current state of game development tools and frameworks in Go is not great compared to other languages like C++, Java, C#.. but there is work being done and I am confident Go will gain more attention in the game dev community over time. The current major frameworks are <a href="https://github.com/faiface/pixel" rel="nofollow">Pixel</a>, <a href="https://github.com/hajimehoshi/ebiten" rel="nofollow">Ebiten</a>, <a href="https://github.com/EngoEngine/engo" rel="nofollow">Engo</a> and <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a>. Pixel is still too beta-ish for my taste and does not support mobile/web target yet. Ebiten looks very promising to me but it just does not support custom shaders, which makes me pass at the moment. I am not sure about the state of Engo at the moment. It had a phase of low maintenance but it seems to have picked up some steam again. It&#39;s certainly worth observing. I covered Raylib already above. The only thing I&#39;m a little sad about is that building for the web is not possible currently (it is in original Raylib via Emscripten).</p>
+<h2><a name="structure-content" class="anchor" href="#structure-content" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Structure &amp; content</h2>
+
+<p>This is a side project for me. That means I don&#39;t have a fixed schedule at the moment. Maybe I will write an issue once a week, maybe twice a month. I don&#39;t know but I have a certain set of topics in mind that I want to address over the course of this tutorial:</p>
+
+<ul>
+<li>how to use the raylib API</li>
+<li>swarm behaviour / flocking</li>
+<li>particle effects</li>
+<li>procedural generation of shapes and / or images</li>
+<li>simple custom shader effects</li>
+<li>a simple AI that is good enough to challenge a casual player</li>
+<li>using composition to design and structure game entities</li>
+</ul>
+
+<p>These topics are subject to change. They also overlap and the order is not set yet. Every tutorial issue will be accompanied by commits and tags in the game&#39;s Github repository. This way you can easily follow the code by checking out certain tags.</p>
+<h2><a name="the-end" class="anchor" href="#the-end" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+The end</h2>
+
+<p>If you made it until here there is a good chance we will see us in the next episode :-)</p>
+</body></html></p>
+        <p><a class="b f6 link dim br2 ph3 pv2 mb2 dib white bg-orange" href="https://github.com/dbriemann/blog/issues/4">Discuss at Github</a></p>
+    </article>
+</main>
+
+	<footer class="border-box w-100 db dt-l mt5 mb4 bt bw1 b--orange pt2 f6">
+		<div class="db dtc-l v-mid w-100 w-50-l">
+			<span class="navy">&copy; 2018 David Linus Briemann</span>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="https://twitter.com/Raging_Dave">@Raging_Dave</a>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="mailto:ragingdave@mailbox.org" target="_top">ragingdave@mailbox.org</a>
+		</div>
+		<div class="db dtc-l v-mid w-100 w-50-l tc tr-l">
+			<span class="navy">This blog is powered by</span>
+			<a class="no-underline blue" href="https://github.com/dbriemann/glyph">Glyph</a>
+		</div>
+		<div></div>
+	</footer>
+</body>
+
+</html>
