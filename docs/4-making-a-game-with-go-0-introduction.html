@@ -89,15 +89,15 @@ The tech stack</h2>
 
 <p>All of those are good frameworks. However I came to the conclusion that I don&#39;t want to deal with those languages for different reasons. I have used Löve and Lua in the past and it&#39;s a really good experience but I prefer compiled languages.</p>
 
-<p>Now meet my pick: Raylib.</p>
+<p>Now meet my pick: raylib.</p>
 <h3><a name="raylib-c-c-go-or-other-languages-via-bindings" class="anchor" href="#raylib-c-c-go-or-other-languages-via-bindings" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<a href="http://www.raylib.com/" rel="nofollow">Raylib</a> (C / C++ / Go or other languages via bindings)</h3>
+<a href="http://www.raylib.com/" rel="nofollow">raylib</a> (C / C++ / Go or other languages via bindings)</h3>
 
 <p>Raylib is a C library that aims to be simple to use and minimizes its dependencies. It is easy to build for most platforms because of the low dependency count. Ray (the creator and maintainer) is super active and knows what he&#39;s doing. Also he is very helpful and teaches students to make games. There are bindings for a few more languages maintained by other developers.</p>
 
-<p>I am quite proficient with C / C++ but my language of choice has been Go over the last few years. Gladly there are bindings for go: <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a>. My plan is to use raylib-go for this project and if there should be unexpected problems with it I can port my game back to original Raylib without too much trouble. I have also created a little particle system in Raylib before: <a href="https://github.com/dbriemann/libpartikel" rel="nofollow">libpartikel</a>. So I already know something about Raylib&#39;s very nice API.</p>
+<p>I am quite proficient with C / C++ but my language of choice has been Go over the last few years. Gladly there are bindings for go: <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a>. My plan is to use raylib-go for this project and if there should be unexpected problems with it I can port my game back to original raylib without too much trouble. I have also created a little particle system in raylib before: <a href="https://github.com/dbriemann/libpartikel" rel="nofollow">libpartikel</a>. So I already know something about raylib&#39;s very nice API.</p>
 
-<p>The Raylib community is still small but constantly growing and I am confident that potential problems can be figured out via the Discord channel or Github issues.</p>
+<p>The raylib community is still small but constantly growing and I am confident that potential problems can be figured out via the Discord channel or Github issues.</p>
 <h3><a name="why-go" class="anchor" href="#why-go" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 Why Go?</h3>
 
@@ -105,7 +105,7 @@ Why Go?</h3>
 
 <p>Now you say: &#34;But it has a garbage collector!&#34;. Yea that&#39;s right. That can be a bummer for some games, especially for AAA ego shooters. It&#39;s a good thing I won&#39;t make such games. Most games today will do just fine with a garbage collected language. However you should not write crappy code and just allocate new objects like a madman while throwing the old ones to big bad GC.</p>
 
-<p>The current state of game development tools and frameworks in Go is not great compared to other languages like C++, Java, C#.. but there is work being done and I am confident Go will gain more attention in the game dev community over time. The current major frameworks are <a href="https://github.com/faiface/pixel" rel="nofollow">Pixel</a>, <a href="https://github.com/hajimehoshi/ebiten" rel="nofollow">Ebiten</a>, <a href="https://github.com/EngoEngine/engo" rel="nofollow">Engo</a> and <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a>. Pixel is still too beta-ish for my taste and does not support mobile/web target yet. Ebiten looks very promising to me but it just does not support custom shaders, which makes me pass at the moment. I am not sure about the state of Engo at the moment. It had a phase of low maintenance but it seems to have picked up some steam again. It&#39;s certainly worth observing. I covered Raylib already above. The only thing I&#39;m a little sad about is that building for the web is not possible currently (it is in original Raylib via Emscripten).</p>
+<p>The current state of game development tools and frameworks in Go is not great compared to other languages like C++, Java, C#.. but there is work being done and I am confident Go will gain more attention in the game dev community over time. The current major frameworks are <a href="https://github.com/faiface/pixel" rel="nofollow">Pixel</a>, <a href="https://github.com/hajimehoshi/ebiten" rel="nofollow">Ebiten</a>, <a href="https://github.com/EngoEngine/engo" rel="nofollow">Engo</a> and <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a>. Pixel is still too beta-ish for my taste and does not support mobile/web target yet. Ebiten looks very promising to me but it just does not support custom shaders, which makes me pass at the moment. I am not sure about the state of Engo at the moment. It had a phase of low maintenance but it seems to have picked up some steam again. It&#39;s certainly worth observing. I covered raylib already above. The only thing I&#39;m a little sad about is that building for the web is not possible currently (it is in original raylib via Emscripten).</p>
 <h2><a name="structure-content" class="anchor" href="#structure-content" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 Structure &amp; content</h2>
 
