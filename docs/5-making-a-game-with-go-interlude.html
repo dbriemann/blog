@@ -1,0 +1,90 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Making a Game with Go: Interlude - Of Unproven Words And Code</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="tachyons.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mw8 center pa2 sans-serif">
+	<header class="mb5">
+		<nav class="border-box w-100 db dt-l pt3 bb bw1 b--orange">
+			<a class="db dtc-l v-mid w-100 w-75-l no-underline" href="/blog">
+				<h1 class="fw7 f1 measure mb3 mt3 navy tracked-tight tc tl-l">Of Unproven Words And Code</h1>
+			</a>
+			<div class="db dtc-l v-mid w-100 w-25-l tc tr-l">
+				<a class="pr3 no-underline f3 fw7 blue dim" href=https://dbriemann.github.io>About</a>
+				<a class="no-underline f3 fw7 blue dim" href="feed.atom">Feed</a>
+			</div>
+		</nav>
+		<p class="mt1 o-60">A blog about solo game development and coding in general</p>
+	</header>
+	<main>
+    <article>
+        <h1>Making a Game with Go: Interlude</h2>
+        <p><html><head></head><body><p>In this short post you can read about <strong>why I switched from <a href="https://github.com/gen2brain/raylib-go" rel="nofollow">raylib-go</a> to <a href="https://github.com/faiface/pixel" rel="nofollow">Pixel</a></strong> for this tutorial series. If you don&#39;t mind you can safely skip this issue. Did I fall into the trap of needlessly starting over with another library instead of sticking to what I have? I think I made the right choice after reconsidering my requirements.</p>
+<h2><a name="why-ditch-raylib-go" class="anchor" href="#why-ditch-raylib-go" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Why ditch raylib-go?</h2>
+
+<p>First let me say that I still think raylib is a great library. And if you write your game in C/C++ I still recommend it very much. But I want to write my game in Go and therefore have to use bindings. It&#39;s great that someone provides these bindings and they seem to be good quality code. However certain problems arise from the fact that raylib is <em>C first</em>.</p>
+<h3><a name="api-changes" class="anchor" href="#api-changes" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+API changes</h3>
+
+<p>raylib moves pretty fast and its API has not really settled. That means there is a lot of work for the maintainer of the bindings to keep up with those changes and thus the bindings are rarely up-to-date with the newest updates.</p>
+<h3><a name="bugs-improvements" class="anchor" href="#bugs-improvements" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Bugs &amp; improvements</h3>
+
+<p>If you find a bug or want to improve on some functionality in raylib you can do that. But you have to do it in C first and then write the bindings in Go. That&#39;s a lot of work if you want to make a game at the same time.</p>
+
+<p>I e.g. had the following problem with raylib.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/39663240-fb0538c2-506f-11e8-9c14-213d3ed94cfe.gif" alt="orbiteer-jumpy"/></p>
+
+<p>If you look at the movement of the planets you will recognize that it is a little <em>jumpy</em>. That comes from the fact that internally raylib casted floats to ints before drawing a sprite. I opened an <a href="https://github.com/raysan5/raylib/issues/527" rel="nofollow">issue</a> about it and it was resolved pretty quickly. However when it is updated in the Go bindings is unknown.</p>
+<h3><a name="feels-like-c" class="anchor" href="#feels-like-c" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Feels like C</h3>
+
+<p>This one is a little subjective but you can still smell the C in the Go bindings. For example all of raylib&#39;s <code>float</code>s are translated with <code>float32</code>. This is very cumbersome because most parts of Go&#39;s standard library expect <code>float64</code> and you just have to cast values everywhere.</p>
+<h2><a name="why-pixel" class="anchor" href="#why-pixel" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Why Pixel?</h2>
+
+<p>Last time I wrote that Pixel was a little to <em>beta-ish</em> and doesn&#39;t support mobile and web targets. Now I was right about the targets but to be honest for this project I don&#39;t really need them. And after re-evaluation of its capabilities and the code and submitting a pull request to Pixel I think I was a little wrong about the <em>beta-ish</em>. It&#39;s well thought out and seems solid so far.</p>
+
+<p>Contributing something to the library was also a very smooth experience. And even if I want features that will not go into the official library I still can use them in my private fork.</p>
+<h2><a name="conclusion" class="anchor" href="#conclusion" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Conclusion</h2>
+
+<p>In the end it&#39;s all about how easy it is for me to change things in the library. Therefore a library that is primarily written in / for Go is just a better choice. Ideally it should build on top of GLFW or SDL. They both are mature and have solid Go bindings.</p>
+
+<p>I will give raylib another shot when the API has settled, maybe with the next major release.</p>
+
+<p>If you want to see how far the game got before I stopped have a look <a href="https://github.com/dbriemann/orbiteer" rel="nofollow">here</a>. This project will now be discontinued and <a href="https://github.com/dbriemann/gonk" rel="nofollow">Gonk</a> will take its place. More on that in the next issue.</p>
+
+<p>I already had written a large chunk of part 1 but rewriting it for Pixel should be pretty straightforward, so it shouldn&#39;t take to long for the first real tutorial issue. See you soon.</p>
+</body></html></p>
+        <p><a class="b f6 link dim br2 ph3 pv2 mb2 dib white bg-orange" href="https://github.com/dbriemann/blog/issues/5">Discuss at Github</a></p>
+    </article>
+</main>
+
+	<footer class="border-box w-100 db dt-l mt5 mb4 bt bw1 b--orange pt2 f6">
+		<div class="db dtc-l v-mid w-100 w-50-l">
+			<span class="navy">&copy; 2018 David Linus Briemann</span>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="https://twitter.com/Raging_Dave">@Raging_Dave</a>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="mailto:ragingdave@mailbox.org" target="_top">ragingdave@mailbox.org</a>
+		</div>
+		<div class="db dtc-l v-mid w-100 w-50-l tc tr-l">
+			<span class="navy">This blog is powered by</span>
+			<a class="no-underline blue" href="https://github.com/dbriemann/glyph">Glyph</a>
+		</div>
+		<div></div>
+	</footer>
+</body>
+
+</html>

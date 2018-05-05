@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Of Unproven Words And Code</title>
   <id>https://dbriemann.github.io/blog</id>
-  <updated>2018-04-24T17:19:53+02:00</updated>
+  <updated>2018-05-05T14:27:12+02:00</updated>
   <subtitle>A blog about solo game development and coding in general</subtitle>
   <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
     <email>ragingdave@mailbox.org</email>
   </author>
+  <entry>
+    <title>Making a Game with Go: Interlude</title>
+    <updated>2018-04-24T08:36:03Z</updated>
+    <id>tag:dbriemann.github.io,2018-04-24:/blog/5-making-a-game-with-go-interlude.html</id>
+    <link href="https://dbriemann.github.io/blog/5-making-a-game-with-go-interlude.html" rel="alternate"></link>
+    <summary type="html">In this short post you can read about &lt;strong&gt;why I switched from &lt;a href=&#34;https://github.com/gen2brain/raylib-go&#34; rel=&#34;nofollow&#34;&gt;raylib-go&lt;/a&gt; to &lt;a href=&#34;https://github.com/faiface/pixel&#34; rel=&#34;nofollow&#34;&gt;Pixel&lt;/a&gt;&lt;/strong&gt; for this tutorial series. If you don&amp;#39;t mind you can safely skip this issue. Did I fall into the trap of needlessly starting over with another library instead of sticking to what I have? I think I made the right choice after reconsidering my requirements.</summary>
+    <author>
+      <name>David Linus Briemann</name>
+      <email>ragingdave@mailbox.org</email>
+    </author>
+  </entry>
   <entry>
     <title>Making a game with Go: #0 Introduction</title>
     <updated>2018-04-22T17:18:43Z</updated>
