@@ -1,0 +1,363 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Making a game with Go and Pixel: #1 Game Objects &amp; Composition - Of Unproven Words And Code</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="tachyons.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mw8 center pa2 sans-serif">
+	<header class="mb5">
+		<nav class="border-box w-100 db dt-l pt3 bb bw1 b--orange">
+			<a class="db dtc-l v-mid w-100 w-75-l no-underline" href="/blog">
+				<h1 class="fw7 f1 measure mb3 mt3 navy tracked-tight tc tl-l">Of Unproven Words And Code</h1>
+			</a>
+			<div class="db dtc-l v-mid w-100 w-25-l tc tr-l">
+				<a class="pr3 no-underline f3 fw7 blue dim" href=https://dbriemann.github.io>About</a>
+				<a class="no-underline f3 fw7 blue dim" href="feed.atom">Feed</a>
+			</div>
+		</nav>
+		<p class="mt1 o-60">A blog about solo game development and coding in general</p>
+	</header>
+	<main>
+    <article>
+        <h1>Making a game with Go and Pixel: #1 Game Objects &amp; Composition</h2>
+        <p><html><head></head><body><p>Say hello to <strong>Gonk</strong>, the game we are going to make. You can find the code at <a href="https://github.com/dbriemann/gonk" rel="nofollow">https://github.com/dbriemann/gonk</a>. This first chapter will cover <strong>basic structures and functions and the use of composition for game objects</strong>.</p>
+<h2><a name="preface" class="anchor" href="#preface" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Preface</h2>
+
+<p>The whole code for the game made in this tutorial can be found <a href="https://github.com/dbriemann/gonk" rel="nofollow">here</a>. You should be able to use git at least a little bit. First of get the source code. The recommended way is to use <code>go get</code>:</p>
+
+<div class="highlight highlight-bash"><pre>go get -d -v -u github.com/dbriemann/gonk
+</pre></div>
+
+<p>This will put <em>gonk</em> in your gopath at <code>$GOPATH/src/github.com/dbriemann/gonk</code>. You can at any point switch to this directory to build and run <em>gonk</em>. Note that the -d flag skips installing the binary into your gopath&#39;s bin directory.</p>
+
+<p>Just use git to pull the newest state or checkout a specific tag. I will add a tag for each chapter so you can use</p>
+
+<div class="highlight highlight-bash"><pre>git checkout chapterX.Y
+</pre></div>
+
+<p>to jump to the game code containing everything up to the tagged chapter. Each chapter will have a note for this. At any point you can go back to the current state with <code>git checkout master</code>. If the beginning of this tutorial is too easy for you, you can just jump in at any point in the series later on.</p>
+
+<p>Note that I won&#39;t discuss all of the code in the tutorial. Things that I deem not interesting, not essential or too simple will not be covered. They will however be part of the code and I will try to comment everything so you can just browse the code and understand what&#39;s happening.</p>
+<h2><a name="1-1-basic-structure-functions" class="anchor" href="#1-1-basic-structure-functions" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+1.1 Basic Structure &amp; Functions</h2>
+
+<blockquote>
+<p><code>git checkout chapter1.1</code></p>
+</blockquote>
+
+<p>First we should note that <em>Pixel</em> expects us to provide a specific function that acts similar to a <code>main</code> function. This is necessary to ensure that all graphics calls originate in the main thread of the program. <em>Pixel</em> makes this easy by allowing us to bind such a function with <code>pixelgl.Run()</code>.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">run</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="c">// ...</span>
+<span class="n">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">pixelgl</span><span class="n">.</span><span class="n">Run</span><span class="n">(</span><span class="n">run</span><span class="n">)</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>We will from now on just use <code>run</code> as if it was <code>main</code> and can be sure that all calls come from the main thread.</p>
+
+<p>Now let&#39;s define some basic functions which will be extended over the course of the tutorial. This section covers the core building blocks of the game flow.</p>
+
+<p>Every game needs to setup and initialize a lot of things at startup. It has to load assets (sound and graphics), select and apply the correct screen mode, check for updates and possibly many more things. That&#39;s why we need some init functions.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">initScreen</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">primaryMonitor</span> <span class="k">=</span> <span class="n">pixelgl</span><span class="n">.</span><span class="n">PrimaryMonitor</span><span class="n">(</span><span class="n">)</span>
+    <span class="n">cfg</span> <span class="k">:=</span> <span class="n">pixelgl</span><span class="n">.</span><span class="n">WindowConfig</span><span class="n">{</span>
+        <span class="n">Title</span><span class="n">:</span>   <span class="n">title</span><span class="n">,</span>
+        <span class="n">Bounds</span><span class="n">:</span>  <span class="n">pixel</span><span class="n">.</span><span class="n">R</span><span class="n">(</span><span class="m">0</span><span class="n">,</span> <span class="m">0</span><span class="n">,</span> <span class="n">float64</span><span class="n">(</span><span class="n">screenWidth</span><span class="n">)</span><span class="n">,</span> <span class="n">float64</span><span class="n">(</span><span class="n">screenHeight</span><span class="n">)</span><span class="n">)</span><span class="n">,</span>
+        <span class="n">Monitor</span><span class="n">:</span> <span class="o">nil</span><span class="n">,</span>
+    <span class="n">}</span>
+    <span class="n">win</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">pixelgl</span><span class="n">.</span><span class="n">NewWindow</span><span class="n">(</span><span class="n">cfg</span><span class="n">)</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+        <span class="n">panic</span><span class="n">(</span><span class="n">err</span><span class="n">)</span>
+    <span class="n">}</span>
+    <span class="n">window</span> <span class="k">=</span> <span class="n">win</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>We won&#39;t go into the details of the <code>initScreen()</code> function because it&#39;s just boilerplate code. The code retrieves the primary monitor and sets up a window with dimensions <code>screenWidth x screenHeight</code>. We will add the ability to switch to full screen mode later in the tutorial. The most important variables here are defined globally in the file <code>globals.go</code>.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Games are a lot about mutating states. Thus it is often easier (and more productive) to define variables globally than passing them around from function to function.</p>
+</blockquote>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">setFPS</span><span class="n">(</span><span class="n">fps</span> <span class="n">int</span><span class="n">)</span> <span class="n">{</span>
+    <span class="k">if</span> <span class="n">fps</span> <span class="k">&lt;=</span> <span class="m">0</span> <span class="n">{</span>
+        <span class="n">frameTick</span> <span class="k">=</span> <span class="o">nil</span>
+    <span class="n">}</span> <span class="k">else</span> <span class="n">{</span>
+        <span class="n">frameTick</span> <span class="k">=</span> <span class="n">time</span><span class="n">.</span><span class="n">NewTicker</span><span class="n">(</span><span class="n">time</span><span class="n">.</span><span class="n">Second</span> <span class="k">/</span> <span class="n">time</span><span class="n">.</span><span class="n">Duration</span><span class="n">(</span><span class="n">fps</span><span class="n">)</span><span class="n">)</span>
+    <span class="n">}</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>Our <code>setFPS()</code> function can either set the maximum frames per second (by providing a positive value) or disable any maximal value (by providing 0). <code>frameTick</code> is a pointer to a <code>time.Ticker</code> from the Go std library and defined in <code>globals.go</code>. If initialized it will trigger every <em>X</em> seconds or in our case fractions of a second. E.g. if we set the FPS to 60 it will trigger every 1/60th second.</p>
+
+<p>This brings us to the game loop. Each game has it. It is the heart of the game. Our game loop looks like this if we strip some things from it that are unimportant to its basic purpose. It is part of the mentioned <code>run()</code> function.</p>
+
+<div class="highlight highlight-Go"><pre>    <span class="k">for</span> <span class="k">!</span><span class="n">window</span><span class="n">.</span><span class="n">Closed</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>                  <span class="c">// (1)</span>
+        <span class="n">last</span> <span class="k">:=</span> <span class="n">now</span>                         <span class="c">// (2a)</span>
+        <span class="n">now</span> <span class="k">=</span> <span class="n">time</span><span class="n">.</span><span class="n">Now</span><span class="n">(</span><span class="n">)</span>                    <span class="c">// (2b)</span>
+        <span class="n">dt</span> <span class="k">:=</span> <span class="n">now</span><span class="n">.</span><span class="n">Sub</span><span class="n">(</span><span class="n">last</span><span class="n">)</span><span class="n">.</span><span class="n">Seconds</span><span class="n">(</span><span class="n">)</span>       <span class="c">// (2c)</span>
+
+        <span class="n">update</span><span class="n">(</span><span class="n">dt</span><span class="n">)</span>                          <span class="c">// (3)</span>
+
+        <span class="n">draw</span><span class="n">(</span><span class="n">)</span>                              <span class="c">// (4)</span>
+
+        <span class="n">window</span><span class="n">.</span><span class="n">Update</span><span class="n">(</span><span class="n">)</span>                     <span class="c">// (5)</span>
+
+        <span class="k">if</span> <span class="n">frameTick</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>               <span class="c">// (6a)</span>
+            <span class="k">&lt;-</span><span class="n">frameTick</span><span class="n">.</span><span class="n">C</span>                   <span class="c">// (6b)</span>
+        <span class="n">}</span>
+    <span class="n">}</span>
+</pre></div>
+
+<p>What it does is actually not that complicated. The loop continues to run until the the window is closed via the <em>x</em> icon (1). At some point we will add a menu to the game which will offer the typical way to exit a game.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Usually you want to create the game before the menu. If your game sucks you have saved time.</p>
+</blockquote>
+
+<p>Lines (2*) calculate the duration of the last frame. The value is stored in the variable <code>dt</code> which is short for <em>delta time</em>. <code>dt</code> is passed to the <code>update()</code> function (3) which can then interpolate if the frames don&#39;t have a consistent duration.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: A game&#39;s update(..) function handles the logic. It is responsible for modifying the state of the game and of all its entities. Often input is handled here too.
+<strong>TIP</strong>: Read more about game loops and delta time in the great article <a href="https://gafferongames.com/post/fix_your_timestep/" rel="nofollow">Fix Your Timestep!</a></p>
+</blockquote>
+
+<p>Next the <code>draw()</code> function is called (4) which will draw everything visible onto the screen. At the end we have a call to <code>window.Update()</code> (5) which tells <em>Pixel</em> that the frame is finished.</p>
+
+<p>Lines (6*) show how the previously mentioned ticker is used. If there is a ticker object the code will wait until it triggers. We have seen how the ticker is initialized in the <code>setFPS()</code> function. With this little snippet we can limit the FPS to a specific value or disable it and the code runs as fast as possible.</p>
+
+<p>Let&#39;s have a look at the <code>draw()</code> function.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">draw</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">window</span><span class="n">.</span><span class="n">Clear</span><span class="n">(</span><span class="n">colornames</span><span class="n">.</span><span class="n">Black</span><span class="n">)</span>
+
+    <span class="c">// Draw HUD</span>
+    <span class="n">fpsText</span><span class="n">.</span><span class="n">Clear</span><span class="n">(</span><span class="n">)</span>
+    <span class="n">fpsText</span><span class="n">.</span><span class="n">WriteString</span><span class="n">(</span><span class="n">fmt</span><span class="n">.</span><span class="n">Sprintf</span><span class="n">(</span><span class="s">&#34;FPS: %d&#34;</span><span class="n">,</span> <span class="n">int</span><span class="n">(</span><span class="n">math</span><span class="n">.</span><span class="n">Round</span><span class="n">(</span><span class="n">fps</span><span class="n">)</span><span class="n">)</span><span class="n">)</span><span class="n">)</span>
+    <span class="n">fpsText</span><span class="n">.</span><span class="n">Draw</span><span class="n">(</span><span class="n">window</span><span class="n">,</span> <span class="n">pixel</span><span class="n">.</span><span class="n">IM</span><span class="n">)</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>The <code>draw()</code> function of a game just draws everything you can see as a player to the screen. It will usually not draw objects outside of the screen or out of sight to save performance. It also should not alter any state in the game. That&#39;s what the <code>update(..)</code> function is there for.</p>
+
+<p>For now <code>draw()</code> just clears the screen with black and draws the measured frames per second on the screen. <a href="https://github.com/faiface/pixel/wiki/Typing-text-on-the-screen" rel="nofollow">This tutorial</a> explains how to handle text in <em>Pixel</em>. We won&#39;t have a look at this topic here. The FPS counter is part of a heads up display we will add to the game. Soon we will add a camera to the game but the HUD will always be drawn outside the camera, directly in screen space.</p>
+<h2><a name="1-2-game-objects-composition" class="anchor" href="#1-2-game-objects-composition" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+1.2 Game Objects &amp; Composition</h2>
+
+<blockquote>
+<p><code>git checkout chapter1.2</code></p>
+</blockquote>
+
+<p>A lot of code has been added since the last chapter. As always we will have a look at the core parts. Let&#39;s start by avoiding misunderstandings. If you have used an <em>Entity Component System</em> before you may be a bit confused because we will use the terms <em>entity</em> and <em>component</em> here but not necessarily with the same meaning. For us a <em>component</em> is a minimal building block with the follwing properties:</p>
+
+<ul>
+<li>it consists of mostly data but can also have small essential functions attached,</li>
+<li>it doesn&#39;t make sense to divide it into smaller pieces,</li>
+<li>it often is used as a part of an <em>entity</em>.</li>
+</ul>
+
+<p>The <em>entity</em> differs from the <em>component</em> because of the follwing properties:</p>
+
+<ul>
+<li>it represents something more complex and has usually more functionality,</li>
+<li>it will usually have an <code>update()</code> and a <code>draw()</code> function,</li>
+<li>it can contain multiple <em>components</em>, often by embedding (composition).</li>
+</ul>
+
+<p>We differentiate between <em>components</em> and <em>entities</em> just logically. There are no types involved. The only physical separation is that we have one file for <em>components</em> (components.go) and one file for <em>entities</em> (entities.go). Because <strong>Gonk</strong> is a small game we won&#39;t need separate files for each component and entity.</p>
+<h3><a name="orb" class="anchor" href="#orb" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Orb</h3>
+
+<p>Let&#39;s start with our <code>orb</code> component. We know that our game will have planets and ships (copied from the original <em>qonk</em>). Both planets and ships show a similar behaviour. They rotate around some kind of anchor. This maybe the origin of the star system (center / sun) or another planet. If we pick the core properties of both a planet and a ship we arrive at <code>orb</code>.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">type</span> <span class="n">orb</span> <span class="k">struct</span> <span class="n">{</span>
+    <span class="n">anchor</span> <span class="k">*</span><span class="n">pixel</span><span class="n">.</span><span class="n">Vec</span>
+    <span class="n">vel</span>    <span class="n">pixel</span><span class="n">.</span><span class="n">Vec</span>
+    <span class="n">pos</span>    <span class="n">pixel</span><span class="n">.</span><span class="n">Vec</span>
+    <span class="n">dir</span>    <span class="n">float64</span>
+    <span class="n">dist</span>   <span class="n">float64</span>
+<span class="n">}</span>
+
+<span class="k">func</span> <span class="n">(</span><span class="n">o</span> <span class="k">*</span><span class="n">orb</span><span class="n">)</span> <span class="n">rotate</span><span class="n">(</span><span class="n">dt</span> <span class="n">float64</span><span class="n">)</span> <span class="n">(</span><span class="n">shift</span> <span class="n">pixel</span><span class="n">.</span><span class="n">Vec</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">mat</span> <span class="k">:=</span> <span class="n">pixel</span><span class="n">.</span><span class="n">IM</span>                                     <span class="c">// (1)</span>
+    <span class="n">len</span> <span class="k">:=</span> <span class="n">o</span><span class="n">.</span><span class="n">vel</span><span class="n">.</span><span class="n">Len</span><span class="n">(</span><span class="n">)</span>                                  <span class="c">// (2)</span>
+    <span class="n">omega</span> <span class="k">:=</span> <span class="n">o</span><span class="n">.</span><span class="n">dir</span> <span class="k">*</span> <span class="n">len</span> <span class="k">/</span> <span class="n">o</span><span class="n">.</span><span class="n">dist</span>                       <span class="c">// (3)</span>
+
+    <span class="n">mat</span> <span class="k">=</span> <span class="n">mat</span><span class="n">.</span><span class="n">Rotated</span><span class="n">(</span><span class="k">*</span><span class="n">o</span><span class="n">.</span><span class="n">anchor</span><span class="n">,</span> <span class="n">omega</span><span class="k">*</span><span class="n">dt</span><span class="n">)</span>              <span class="c">// (4)</span>
+    <span class="n">npos</span> <span class="k">:=</span> <span class="n">mat</span><span class="n">.</span><span class="n">Project</span><span class="n">(</span><span class="n">o</span><span class="n">.</span><span class="n">pos</span><span class="n">)</span>                          <span class="c">// (5)</span>
+    <span class="n">shift</span><span class="n">.</span><span class="n">X</span><span class="n">,</span> <span class="n">shift</span><span class="n">.</span><span class="n">Y</span> <span class="k">=</span> <span class="n">npos</span><span class="n">.</span><span class="n">X</span><span class="k">-</span><span class="n">o</span><span class="n">.</span><span class="n">pos</span><span class="n">.</span><span class="n">X</span><span class="n">,</span> <span class="n">npos</span><span class="n">.</span><span class="n">Y</span><span class="k">-</span><span class="n">o</span><span class="n">.</span><span class="n">pos</span><span class="n">.</span><span class="n">Y</span>   <span class="c">// (6)</span>
+    <span class="n">o</span><span class="n">.</span><span class="n">pos</span><span class="n">.</span><span class="n">X</span><span class="n">,</span> <span class="n">o</span><span class="n">.</span><span class="n">pos</span><span class="n">.</span><span class="n">Y</span> <span class="k">=</span> <span class="n">npos</span><span class="n">.</span><span class="n">XY</span><span class="n">(</span><span class="n">)</span>                        <span class="c">// (7)</span>
+    <span class="k">return</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>You can see that an <code>orb</code> holds a pointer to an <em>anchor</em> vector. This way we can use any position of any orb specifically as anchor without having to copy the values every time the anchor moves. The other properties are simple:</p>
+
+<ul>
+<li>vel(ocity): speed of the orb</li>
+<li>pos(ition): ..</li>
+<li>dir(ection): this is -1 for clockwise rotaten and 1 for counter-clockwise</li>
+<li>dist(ance): distance to the anchor</li>
+</ul>
+
+<p>Let&#39;s have a look at the <code>rotate</code> function. It takes one argument (<code>dt</code>) and returns the <code>shift</code> Vector. We know <code>dt</code> already. It is the delta time usually consumed by <code>update()</code> functions. It determines how far the orb rotates depending on the time passed. The returned vector <code>shift</code> just contains how the orb was moved by the rotation. We will see how this is used later on.</p>
+
+<p>In line (1) we just create a new matrix by copying the identity matrix. In the next line we misuse the <code>vel</code> vector (2) by just calculating its length to act as a pseudo-speed. Because the orb only rotates on a set circle we don&#39;t need a vector here and thus we simplify and pretend to have a 1D velocity. Line (3) calculates the angle dependending on <code>dir</code>, <code>dist</code> and the <em>speed</em>.</p>
+
+<p>We now use <em>Pixel&#39;s</em> functions (4,5) to rotate <code>pos</code> around <code>anchor</code>. As you can see <code>dt</code> is a factor for the angle. You can remember it like that: omega is rotation (in rad) per second. Now if <code>dt</code> equals 1/60th of a second the orb is only rotated by 1/60th of omega. The <code>Rotated</code> function just creates a matrix (4) to rotate <em>something</em> around <code>anchor</code> by the given angle. Afterwards <code>Project</code> applies this matrix to the <code>pos</code> vector. The result <code>npos</code> is the new position after rotation.</p>
+
+<p>In line (6) we calculate the delta vector from the old and new position. This is the vector that is returned by the <code>rotate</code> function. In line (7) only the new position values are assigned to the current position and the position is now updated.</p>
+<h3><a name="planet-and-ship" class="anchor" href="#planet-and-ship" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Planet and Ship</h3>
+
+<p>It&#39;s time for a little composition. Here are our <code>planet</code> and <code>ship</code> <em>entities</em>. First let me say that <code>player</code> is another <em>component</em> but we will not discuss it here. Have a look at it. It is pretty self-explanatory.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">type</span> <span class="n">planet</span> <span class="k">struct</span> <span class="n">{</span>
+    <span class="n">orb</span>
+    <span class="k">*</span><span class="n">player</span>
+
+    <span class="n">satellites</span>    <span class="n">[</span><span class="n">]</span><span class="k">*</span><span class="n">planet</span>     <span class="c">// (1)</span>
+    <span class="n">ships</span>         <span class="n">[</span><span class="n">]</span><span class="k">*</span><span class="n">ship</span>       <span class="c">// (2)</span>
+    <span class="n">shipsProduced</span> <span class="n">float64</span>       <span class="c">// (3)</span>
+    <span class="n">shipAngleMod</span>  <span class="n">float64</span>       <span class="c">// (4)</span>
+    <span class="n">size</span>          <span class="n">float64</span>
+<span class="n">}</span>
+
+<span class="k">type</span> <span class="n">ship</span> <span class="k">struct</span> <span class="n">{</span>
+    <span class="n">orb</span>
+    <span class="k">*</span><span class="n">player</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>As you see both <code>planet</code> and <code>ship</code> embed an <code>orb</code> and a <code>*player</code>. We already talked about the shared properties of <code>planet</code> and <code>ship</code>. Luckily in Go we can embed structs in other structs. By doing this the embedded struct&#39;s properties become properties of the embedding struct. E.g. both <code>planet</code> and <code>ship</code> have now access to <code>pos</code>, <code>vel</code>, <code>*anchor</code> etc. You could also access them via <code>planet.orb.pos</code> and so on if you wanted / needed to.</p>
+
+<p>The <code>planet</code> has additionally gained some more properties. Line (1) shows a recursive declaration of a slice of pointers to <em>planets</em>. The <code>satellites</code> slice lets us keep track of other planets orbiting this one. The slice holds pointers because all planets <em>live</em> in a global array called <code>planets</code> and we only want to know which ones are satellites.</p>
+
+<p>Next there is the <code>ships</code> slice (2). Every <code>planet</code> has ships circling it but <em>ships</em> can move from one <code>planet</code> to another to attack or reinforce. Now if <em>ships</em> attack most of them are destroyed in the process. We don&#39;t want to create and destroy too many objects and thus rely too much on garbage collection. That&#39;s why there is a global slice called <code>recycledShips</code>. As the name suggests it acts like a pool that collects <em>destroyed ships</em> and releases them as <em>new</em> when needed. You can check the <code>newShip()</code> function to see how it is done.</p>
+
+<p>The <code>shipsProduced</code> property in line (3) keeps track of how many ships were produced since the last <code>update()</code> call. In many frames this number is &lt; 1 and has no visible impact. As soon as the value is &gt;= 1 a new ship is produced. Line (4) contains a helper variable that stores the angle modifier for all ships circling a planet.</p>
+
+<p>The <code>ship</code> doesn&#39;t have more properties currently but will certainly be extended at some point.</p>
+<h4><a name="camera" class="anchor" href="#camera" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Camera</h4>
+
+<p>For convenience I want the center of our universe to be (0,0), which also shall be at the center of the screen. Usually in <em>Pixel</em> (0,0) is the lower left corner of the screen. That means we have to translate the visible area to the left and to the bottom by half the screen width and half the screen height respectively. Let&#39;s introduce two variables that define our camera.</p>
+
+<div class="highlight highlight-Go"><pre><span class="n">camPos</span> <span class="k">=</span> <span class="n">pixel</span><span class="n">.</span><span class="n">ZV</span>
+<span class="n">cam</span>    <span class="n">pixel</span><span class="n">.</span><span class="n">Matrix</span>
+</pre></div>
+
+<p>The position we are looking at is defined by <code>camPos</code> and is set to the zero vector. The matrix describing the actual camera transformations is named <code>cam</code> and is set and applied in the <code>initScreen()</code> function:</p>
+
+<div class="highlight highlight-Go"><pre><span class="n">cam</span> <span class="k">=</span> <span class="n">pixel</span><span class="n">.</span><span class="n">IM</span><span class="n">.</span><span class="n">Moved</span><span class="n">(</span><span class="n">worldCanvas</span><span class="n">.</span><span class="n">Bounds</span><span class="n">(</span><span class="n">)</span><span class="n">.</span><span class="n">Center</span><span class="n">(</span><span class="n">)</span><span class="n">.</span><span class="n">Sub</span><span class="n">(</span><span class="n">camPos</span><span class="n">)</span><span class="n">)</span>
+<span class="n">worldCanvas</span><span class="n">.</span><span class="n">SetMatrix</span><span class="n">(</span><span class="n">cam</span><span class="n">)</span>
+</pre></div>
+
+<p>We see that the camera is not applied to <code>window</code> directly but to <code>worldCanvas</code>. The reason is that we want to draw HUD elements to <code>window</code> without camera transformations. They live in screen space. The canvas has the same size as the window and is drawn to the window before all HUD elements.</p>
+
+<p>Worth noting is that we also have to translate the canvas when drawing it to the window:</p>
+
+<div class="highlight highlight-Go"><pre><span class="n">worldCanvas</span><span class="n">.</span><span class="n">Draw</span><span class="n">(</span><span class="n">window</span><span class="n">,</span> <span class="n">cam</span><span class="n">)</span>
+</pre></div>
+
+<p>The reason is simple. We only applied the camera transformations to <code>worldCanvas</code> but not to <code>window</code>. So when drawing (anything) to <code>window</code> (0,0) is still the lower left corner. That means we also have to apply the translation when drawing the canvas to the window.</p>
+<h4><a name="update-rotation" class="anchor" href="#update-rotation" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Update &amp; Rotation</h4>
+
+<p>As last topic in this chapter we will look at rotating and updating <em>planets</em>. Here is the relevant code:</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">(</span><span class="n">p</span> <span class="k">*</span><span class="n">planet</span><span class="n">)</span> <span class="n">rotateGroup</span><span class="n">(</span><span class="n">dt</span> <span class="n">float64</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">dvec</span> <span class="k">:=</span> <span class="n">p</span><span class="n">.</span><span class="n">rotate</span><span class="n">(</span><span class="n">dt</span><span class="n">)</span>                        <span class="c">// (1)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">i</span> <span class="k">&lt;</span> <span class="n">len</span><span class="n">(</span><span class="n">p</span><span class="n">.</span><span class="n">satellites</span><span class="n">)</span><span class="n">;</span> <span class="n">i</span><span class="k">++</span> <span class="n">{</span>    <span class="c">// (2)</span>
+        <span class="n">p</span><span class="n">.</span><span class="n">satellites</span><span class="n">[</span><span class="n">i</span><span class="n">]</span><span class="n">.</span><span class="n">pos</span><span class="n">.</span><span class="n">X</span> <span class="k">+=</span> <span class="n">dvec</span><span class="n">.</span><span class="n">X</span>         <span class="c">// (3a)</span>
+        <span class="n">p</span><span class="n">.</span><span class="n">satellites</span><span class="n">[</span><span class="n">i</span><span class="n">]</span><span class="n">.</span><span class="n">pos</span><span class="n">.</span><span class="n">Y</span> <span class="k">+=</span> <span class="n">dvec</span><span class="n">.</span><span class="n">Y</span>         <span class="c">// (3b)</span>
+    <span class="n">}</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>In the <code>rotateGroup()</code> method we see how the <code>shift</code> vector returned by <code>orb.rotate()</code> is used. First an <code>orb</code> (in this case a <code>planet</code>) is rotated and the delta is saved in <code>dvec</code> (1). Then every of its <em>satellites</em> (2) is moved by the same delta (3*). This is easier than rotating each satellite also around its anchor&#39;s anchor.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">(</span><span class="n">p</span> <span class="k">*</span><span class="n">planet</span><span class="n">)</span> <span class="n">update</span><span class="n">(</span><span class="n">dt</span> <span class="n">float64</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">p</span><span class="n">.</span><span class="n">rotateGroup</span><span class="n">(</span><span class="n">dt</span><span class="n">)</span>
+    <span class="c">// Ship production depends on planet size: production = sqrt(radius)/5</span>
+    <span class="n">prod</span> <span class="k">:=</span> <span class="n">math</span><span class="n">.</span><span class="n">Sqrt</span><span class="n">(</span><span class="n">p</span><span class="n">.</span><span class="n">size</span><span class="n">)</span> <span class="k">*</span> <span class="n">productionFactor</span>    <span class="c">// (1)</span>
+    <span class="n">p</span><span class="n">.</span><span class="n">shipsProduced</span> <span class="k">+=</span> <span class="n">prod</span> <span class="k">*</span> <span class="n">dt</span>
+
+    <span class="c">// Add new ships to slice.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">i</span> <span class="k">&lt;</span> <span class="n">int</span><span class="n">(</span><span class="n">p</span><span class="n">.</span><span class="n">shipsProduced</span><span class="n">)</span><span class="n">;</span> <span class="n">i</span><span class="k">++</span> <span class="n">{</span>
+        <span class="n">added</span> <span class="k">:=</span> <span class="o">false</span>
+        <span class="c">// Search a free spot and if there is none append.</span>
+        <span class="n">nship</span> <span class="k">:=</span> <span class="n">newShip</span><span class="n">(</span><span class="n">p</span><span class="n">,</span> <span class="n">p</span><span class="n">.</span><span class="n">player</span><span class="n">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">j</span> <span class="k">&lt;</span> <span class="n">len</span><span class="n">(</span><span class="n">p</span><span class="n">.</span><span class="n">ships</span><span class="n">)</span><span class="n">;</span> <span class="n">j</span><span class="k">++</span> <span class="n">{</span>
+            <span class="k">if</span> <span class="n">p</span><span class="n">.</span><span class="n">ships</span><span class="n">[</span><span class="n">i</span><span class="n">]</span> <span class="k">==</span> <span class="o">nil</span> <span class="n">{</span>
+                <span class="n">p</span><span class="n">.</span><span class="n">ships</span><span class="n">[</span><span class="n">i</span><span class="n">]</span> <span class="k">=</span> <span class="n">nship</span>
+                <span class="n">added</span> <span class="k">=</span> <span class="o">true</span>
+            <span class="n">}</span>
+        <span class="n">}</span>
+        <span class="k">if</span> <span class="k">!</span><span class="n">added</span> <span class="n">{</span>
+            <span class="n">p</span><span class="n">.</span><span class="n">ships</span> <span class="k">=</span> <span class="n">append</span><span class="n">(</span><span class="n">p</span><span class="n">.</span><span class="n">ships</span><span class="n">,</span> <span class="n">nship</span><span class="n">)</span>
+        <span class="n">}</span>
+        <span class="n">p</span><span class="n">.</span><span class="n">shipsProduced</span><span class="k">--</span>
+    <span class="n">}</span>
+
+    <span class="n">p</span><span class="n">.</span><span class="n">setShips</span><span class="n">(</span><span class="n">dt</span><span class="n">)</span>                                  <span class="c">// (2)</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>The <em>planet&#39;s</em> <code>update()</code> method first rotates the planet and all its satellites as shown above. The production of new ships in line (1) follows the simple equation <code>f(x) = sqrt(x)/5</code> where <code>x</code> is the radius. We have defined the maximum radius of a planet as 9 (see <code>globals.go</code>). This is how the ship production per second looks as a graph:</p>
+
+<p>IMAGE GRAPH</p>
+
+<p>As you can see it is slightly above 0.5 ships per second for the biggest <em>planets</em>. This function will probably tweaked over time but for now I like the production speed. After adding the ships to the planet we call <code>setShips()</code> in line (2). This method just distributes all the ships of a planet evenly around a planet and rotates them.</p>
+<h2><a name="1-3-afterthought" class="anchor" href="#1-3-afterthought" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+1.3 Afterthought</h2>
+
+<blockquote>
+<p>Nothing to checkout.</p>
+</blockquote>
+
+<p>This was the first real tutorial I&#39;ve written. I needed significantly longer to write this than to write the <strong>Gonk</strong> code up to this point. I am also not really satisfied with the result. I did not cover the whole code but it is still a lot of text and I am not sure if the topics covered were too easy. I am also pretty sure that the whole structure of this chapter could be improved.</p>
+
+<p>Resulting from these thoughts I have decided that the coming chapters will (probably) a bit shorter than this one and also only cover 1 specific topic. I may add git tags for code that does not receive a separate tutorial chapter if it is about a single topic.</p>
+<h2><a name="1-4-what-s-next" class="anchor" href="#1-4-what-s-next" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+1.4 What&#39;s next?</h2>
+
+<blockquote>
+<p>Nothing to checkout.</p>
+</blockquote>
+
+<p>At the moment the draw methods for <code>planet</code> and <code>ship</code> both just draw primitive circles. In the next chapter we will procedurally generate <em>nice</em> planet sprites and use them instead. This not only looks nicer but will be great for performance. If you just run <strong>Gonk</strong> for a few minutes you will see how the performance becomes horrible. This is because circles need a lot of resources to draw (many triangles) and currently each <code>ship</code> is a circle!</p>
+</body></html></p>
+        <p><a class="b f6 link dim br2 ph3 pv2 mb2 dib white bg-orange" href="https://github.com/dbriemann/blog/issues/6">Discuss at Github</a></p>
+    </article>
+</main>
+
+	<footer class="border-box w-100 db dt-l mt5 mb4 bt bw1 b--orange pt2 f6">
+		<div class="db dtc-l v-mid w-100 w-50-l">
+			<span class="navy">&copy; 2018 David Linus Briemann</span>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="https://twitter.com/Raging_Dave">@Raging_Dave</a>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="mailto:ragingdave@mailbox.org" target="_top">ragingdave@mailbox.org</a>
+		</div>
+		<div class="db dtc-l v-mid w-100 w-50-l tc tr-l">
+			<span class="navy">This blog is powered by</span>
+			<a class="no-underline blue" href="https://github.com/dbriemann/glyph">Glyph</a>
+		</div>
+		<div></div>
+	</footer>
+</body>
+
+</html>

@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Of Unproven Words And Code</title>
   <id>https://dbriemann.github.io/blog</id>
-  <updated>2018-05-05T14:27:12+02:00</updated>
+  <updated>2018-05-17T14:33:56+02:00</updated>
   <subtitle>A blog about solo game development and coding in general</subtitle>
   <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
     <email>ragingdave@mailbox.org</email>
   </author>
+  <entry>
+    <title>Making a game with Go and Pixel: #1 Game Objects &amp; Composition</title>
+    <updated>2018-05-17T12:32:51Z</updated>
+    <id>tag:dbriemann.github.io,2018-05-17:/blog/6-making-a-game-with-go-and-pixel-1-game-objects-and-composition.html</id>
+    <link href="https://dbriemann.github.io/blog/6-making-a-game-with-go-and-pixel-1-game-objects-and-composition.html" rel="alternate"></link>
+    <summary type="html">Say hello to &lt;strong&gt;Gonk&lt;/strong&gt;, the game we are going to make. You can find the code at &lt;a href=&#34;https://github.com/dbriemann/gonk&#34; rel=&#34;nofollow&#34;&gt;https://github.com/dbriemann/gonk&lt;/a&gt;. This first chapter will cover &lt;strong&gt;basic structures and functions and the use of composition for game objects&lt;/strong&gt;.</summary>
+    <author>
+      <name>David Linus Briemann</name>
+      <email>ragingdave@mailbox.org</email>
+    </author>
+  </entry>
   <entry>
     <title>Making a Game with Go: Interlude</title>
     <updated>2018-04-24T08:36:03Z</updated>
