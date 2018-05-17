@@ -318,7 +318,7 @@ Update &amp; Rotation</h4>
 
 <p>The <em>planet&#39;s</em> <code>update()</code> method first rotates the planet and all its satellites as shown above. The production of new ships in line (1) follows the simple equation <code>f(x) = sqrt(x)/5</code> where <code>x</code> is the radius. We have defined the maximum radius of a planet as 9 (see <code>globals.go</code>). This is how the ship production per second looks as a graph:</p>
 
-<p>IMAGE GRAPH</p>
+<p><img src="https://user-images.githubusercontent.com/791374/40177658-7e3492f6-59df-11e8-9062-d0cdb1e0b367.png" alt="production"/></p>
 
 <p>As you can see it is slightly above 0.5 ships per second for the biggest <em>planets</em>. This function will probably tweaked over time but for now I like the production speed. After adding the ships to the planet we call <code>setShips()</code> in line (2). This method just distributes all the ships of a planet evenly around a planet and rotates them.</p>
 <h2><a name="1-3-afterthought" class="anchor" href="#1-3-afterthought" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
