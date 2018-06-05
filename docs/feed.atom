@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Of Unproven Words And Code</title>
   <id>https://dbriemann.github.io/blog</id>
-  <updated>2018-05-17T14:35:33+02:00</updated>
+  <updated>2018-06-05T14:55:36+02:00</updated>
   <subtitle>A blog about solo game development and coding in general</subtitle>
   <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
     <email>ragingdave@mailbox.org</email>
   </author>
+  <entry>
+    <title>Making a game with Go and Pixel: #2 Procedural Generation (PCG)</title>
+    <updated>2018-06-05T12:55:19Z</updated>
+    <id>tag:dbriemann.github.io,2018-06-05:/blog/7-making-a-game-with-go-and-pixel-2-procedural-generation-pcg.html</id>
+    <link href="https://dbriemann.github.io/blog/7-making-a-game-with-go-and-pixel-2-procedural-generation-pcg.html" rel="alternate"></link>
+    <summary type="html">This issue is about &lt;strong&gt;procedurally generating planet textures&lt;/strong&gt; solely by using simplex noise. &lt;a href=&#34;http://pcg.wikidot.com/&#34; rel=&#34;nofollow&#34;&gt;PCG&lt;/a&gt; is commonly used to create all kinds of content for games. This can increase replayability because of less repetition and also reduce the need for manual asset creation. Obviously it&amp;#39;s not a general replacement for that!</summary>
+    <author>
+      <name>David Linus Briemann</name>
+      <email>ragingdave@mailbox.org</email>
+    </author>
+  </entry>
   <entry>
     <title>Making a game with Go and Pixel: #1 Game Objects &amp; Composition</title>
     <updated>2018-05-17T12:32:51Z</updated>

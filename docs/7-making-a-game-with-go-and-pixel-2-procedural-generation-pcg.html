@@ -1,0 +1,170 @@
+<!doctype html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Making a game with Go and Pixel: #2 Procedural Generation (PCG) - Of Unproven Words And Code</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="tachyons.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mw8 center pa2 sans-serif">
+	<header class="mb5">
+		<nav class="border-box w-100 db dt-l pt3 bb bw1 b--orange">
+			<a class="db dtc-l v-mid w-100 w-75-l no-underline" href="/blog">
+				<h1 class="fw7 f1 measure mb3 mt3 navy tracked-tight tc tl-l">Of Unproven Words And Code</h1>
+			</a>
+			<div class="db dtc-l v-mid w-100 w-25-l tc tr-l">
+				<a class="pr3 no-underline f3 fw7 blue dim" href=https://dbriemann.github.io>About</a>
+				<a class="no-underline f3 fw7 blue dim" href="feed.atom">Feed</a>
+			</div>
+		</nav>
+		<p class="mt1 o-60">A blog about solo game development and coding in general</p>
+	</header>
+	<main>
+    <article>
+        <h1>Making a game with Go and Pixel: #2 Procedural Generation (PCG)</h2>
+        <p><html><head></head><body><p>This issue is about <strong>procedurally generating planet textures</strong> solely by using simplex noise. <a href="http://pcg.wikidot.com/" rel="nofollow">PCG</a> is commonly used to create all kinds of content for games. This can increase replayability because of less repetition and also reduce the need for manual asset creation. Obviously it&#39;s not a general replacement for that!</p>
+<h2><a name="2-noise" class="anchor" href="#2-noise" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+2 Noise</h2>
+
+<blockquote>
+<p><code>git checkout chapter2</code></p>
+</blockquote>
+
+<p>What is noise and why do we need it? There are different types of noise: just random noise or sophisticated noise such as <a href="https://en.wikipedia.org/wiki/Simplex_noise" rel="nofollow">simplex noise</a>. Let&#39;s have a look at random noise.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977018-1366ecee-68d0-11e8-8657-b5cee11bf3f4.png" alt="noise-1-random"/></p>
+
+<p>As you can see it doesn&#39;t look very appealing. It certainly does not remember me of a planet texture. The problem is that it has no visible pattern(s), it is just random (well pseudo random but let&#39;s ignore this right now). Compare that to the output of the simplex noise function, where the inputs are just the <em>x</em> and <em>y</em> coordinates of the image.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977024-1b3ea920-68d0-11e8-9d88-3ff50fde8d4f.png" alt="noise-2-simplex-1"/></p>
+
+<p>Here it feels more like a pattern. The visual effect is less chaotic but it still does not resemble a planet surface structure. Simplex noise however allows us to change the frequency of the resulting values. We can do that by <em>zooming</em> in or out. Let&#39;s multiply the <em>x</em> and <em>y</em> coordinates by <em>0.1</em> each before passing it to simplex.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977029-20565be2-68d0-11e8-89d1-ced9a8eba738.png" alt="noise-3-simplex-01"/></p>
+
+<p>Zooming in has produced a less hectic pattern as before and if we try this again with a multiplier of <em>0.01</em> it will be even <em>calmer</em>.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977044-27b0e42a-68d0-11e8-96d3-984cbf1ca98b.png" alt="noise-4-simplex-001"/></p>
+
+<p>Now what? We have multiple noise <em>patterns</em> but none of them really look like anything. The good part is we can combine multiple layers of noise to one. This is similar to mixing sound signals. In fact our noises are just signals too. We will use the following function to create layered noise:</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">layerNoise</span><span class="n">(</span><span class="n">layers</span> <span class="n">int</span><span class="n">,</span> <span class="n">x</span><span class="n">,</span> <span class="n">y</span><span class="n">,</span> <span class="n">persistence</span><span class="n">,</span> <span class="n">freq</span><span class="n">,</span> <span class="n">low</span><span class="n">,</span> <span class="n">high</span> <span class="n">float64</span><span class="n">)</span> <span class="n">(</span><span class="n">result</span> <span class="n">float64</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">ampSum</span> <span class="k">:=</span> <span class="m">0.0</span>
+    <span class="n">amp</span> <span class="k">:=</span> <span class="m">1.0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">i</span> <span class="k">&lt;</span> <span class="n">layers</span><span class="n">;</span> <span class="n">i</span><span class="k">++</span> <span class="n">{</span>
+        <span class="n">result</span> <span class="k">+=</span> <span class="n">noise</span><span class="n">.</span><span class="n">Eval2</span><span class="n">(</span><span class="n">x</span><span class="k">*</span><span class="n">freq</span><span class="n">,</span> <span class="n">y</span><span class="k">*</span><span class="n">freq</span><span class="n">)</span> <span class="k">*</span> <span class="n">amp</span>
+        <span class="n">ampSum</span> <span class="k">+=</span> <span class="n">amp</span>
+        <span class="n">amp</span> <span class="k">*=</span> <span class="n">persistence</span>
+        <span class="n">freq</span> <span class="k">*=</span> <span class="m">2</span>
+    <span class="n">}</span>
+
+    <span class="n">result</span> <span class="k">/=</span> <span class="n">ampSum</span>
+
+    <span class="n">result</span> <span class="k">=</span> <span class="n">result</span><span class="k">*</span><span class="n">(</span><span class="n">high</span><span class="k">-</span><span class="n">low</span><span class="n">)</span><span class="k">/</span><span class="m">2</span> <span class="k">+</span> <span class="n">(</span><span class="n">high</span><span class="k">+</span><span class="n">low</span><span class="n">)</span><span class="k">/</span><span class="m">2</span>
+    <span class="k">return</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>First of all let&#39;s credit the original author. I adapted this function from <a href="https://cmaher.github.io/posts/working-with-simplex-noise/" rel="nofollow">here</a>. If you want to know more about simplex noise the linked article is worth a read. For the actual generation of noise we use the <code>github.com/ojrac/opensimplex-go</code> package.</p>
+
+<p>As you can see the function generates one result value for a specific x and y input. The result is transformed into the given range between <code>low</code> and <code>high</code>. The <code>layer</code> parameter specifies how many layers of noise are used to sample this value. Each layer has different settings for frequency and amplitude of the noise. A lower frequency means a calmer pattern or less abrupt changes over the <em>x</em> and <em>y</em> dimension. Reducing the amplitude for higher frequencies achieves a lesser weight of the more hectic layers in the result. Dividing the resulting value by the total of all amplitudes averages the layers&#39; values.</p>
+
+<p>Trying this function with <code>layers = 8</code>, <code>persistence = 0.5</code> and <code>freq = 0.02</code> yields the following noise.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Procedural generation is a lot about trying things and tweaking parameters. This function could be good to create a water or stone texture with totally different parameters.</p>
+</blockquote>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977052-2c8657aa-68d0-11e8-82f9-afed7f89de7f.png" alt="noise-5-simplex-layers"/></p>
+
+<p>Now this looks similar to the moon surface. We can really use this to create some planets. Let&#39;s go ahead and inspect our planet generator function.</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">func</span> <span class="n">genPlanet</span><span class="n">(</span><span class="n">radius</span> <span class="n">float64</span><span class="n">)</span> <span class="n">(</span><span class="n">canvas</span> <span class="k">*</span><span class="n">pixelgl</span><span class="n">.</span><span class="n">Canvas</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">noise</span> <span class="k">=</span> <span class="n">opensimplex</span><span class="n">.</span><span class="n">NewWithSeed</span><span class="n">(</span><span class="n">time</span><span class="n">.</span><span class="n">Now</span><span class="n">(</span><span class="n">)</span><span class="n">.</span><span class="n">UnixNano</span><span class="n">(</span><span class="n">)</span><span class="n">)</span>                      <span class="c">// (1)</span>
+    <span class="n">size</span> <span class="k">:=</span> <span class="n">int</span><span class="n">(</span><span class="n">radius</span><span class="k">*</span><span class="m">2</span> <span class="k">+</span> <span class="m">1</span><span class="n">)</span>
+    <span class="n">canvas</span> <span class="k">=</span> <span class="n">genGradientDisc</span><span class="n">(</span><span class="n">radius</span><span class="n">,</span> <span class="m">0.98</span><span class="n">,</span> <span class="n">colornames</span><span class="n">.</span><span class="n">White</span><span class="n">)</span>                    <span class="c">// (2)</span>
+    <span class="n">pixels</span> <span class="k">:=</span> <span class="n">canvas</span><span class="n">.</span><span class="n">Pixels</span><span class="n">(</span><span class="n">)</span>                                                   <span class="c">// (3)</span>
+
+    <span class="n">freq</span> <span class="k">:=</span> <span class="n">radius</span> <span class="k">/</span> <span class="n">(</span><span class="m">1000</span> <span class="k">*</span> <span class="n">(</span><span class="n">radius</span> <span class="k">/</span> <span class="m">40</span><span class="n">)</span> <span class="k">*</span> <span class="n">(</span><span class="n">radius</span> <span class="k">/</span> <span class="m">40</span><span class="n">)</span><span class="n">)</span>                     <span class="c">// (4)</span>
+
+    <span class="k">for</span> <span class="n">y</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">y</span> <span class="k">&lt;</span> <span class="n">size</span><span class="n">;</span> <span class="n">y</span><span class="k">++</span> <span class="n">{</span>
+        <span class="c">//nn := layerNoise(16, 0, float64(y), 0.5, freq, 0.25, 1)               // (X)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">x</span> <span class="k">&lt;</span> <span class="n">size</span><span class="n">;</span> <span class="n">x</span><span class="k">++</span> <span class="n">{</span>
+            <span class="n">index</span> <span class="k">:=</span> <span class="n">y</span><span class="k">*</span><span class="n">size</span><span class="k">*</span><span class="m">4</span> <span class="k">+</span> <span class="n">x</span><span class="k">*</span><span class="m">4</span>                                             <span class="c">// (5)</span>
+            <span class="n">r</span><span class="n">,</span> <span class="n">g</span><span class="n">,</span> <span class="n">b</span><span class="n">,</span> <span class="n">a</span> <span class="k">:=</span> <span class="n">float64</span><span class="n">(</span><span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="n">]</span><span class="n">)</span><span class="n">,</span> <span class="n">float64</span><span class="n">(</span><span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="k">+</span><span class="m">1</span><span class="n">]</span><span class="n">)</span><span class="n">,</span>     <span class="c">// (6)</span>
+                          <span class="n">float64</span><span class="n">(</span><span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="k">+</span><span class="m">2</span><span class="n">]</span><span class="n">)</span><span class="n">,</span> <span class="n">float64</span><span class="n">(</span><span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="k">+</span><span class="m">3</span><span class="n">]</span><span class="n">)</span>
+
+            <span class="k">if</span> <span class="n">a</span> <span class="k">&gt;</span> <span class="m">0</span> <span class="n">{</span>
+                <span class="n">nnn</span> <span class="k">:=</span> <span class="n">layerNoise</span><span class="n">(</span><span class="m">16</span><span class="n">,</span> <span class="n">float64</span><span class="n">(</span><span class="n">x</span><span class="n">)</span><span class="n">,</span> <span class="n">float64</span><span class="n">(</span><span class="n">y</span><span class="n">)</span><span class="n">,</span> <span class="m">0.5</span><span class="n">,</span> <span class="n">freq</span><span class="n">,</span> <span class="m">0</span><span class="n">,</span> <span class="m">1</span><span class="n">)</span>  <span class="c">// (7)</span>
+                <span class="c">// n := (nnn + nn) / 2                                          // (Y)</span>
+                <span class="n">n</span> <span class="k">:=</span> <span class="n">nnn</span>                                                        <span class="c">// (Z)</span>
+
+                <span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="n">]</span> <span class="k">=</span> <span class="n">brighten</span><span class="n">(</span><span class="n">uint8</span><span class="n">(</span><span class="n">r</span><span class="k">*</span><span class="n">n</span><span class="n">)</span><span class="n">,</span> <span class="m">1.5</span><span class="n">)</span>                       <span class="c">// (8)</span>
+                <span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="k">+</span><span class="m">1</span><span class="n">]</span> <span class="k">=</span> <span class="n">brighten</span><span class="n">(</span><span class="n">uint8</span><span class="n">(</span><span class="n">g</span><span class="k">*</span><span class="n">n</span><span class="n">)</span><span class="n">,</span> <span class="m">1.5</span><span class="n">)</span>
+                <span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="k">+</span><span class="m">2</span><span class="n">]</span> <span class="k">=</span> <span class="n">brighten</span><span class="n">(</span><span class="n">uint8</span><span class="n">(</span><span class="n">b</span><span class="k">*</span><span class="n">n</span><span class="n">)</span><span class="n">,</span> <span class="m">1.5</span><span class="n">)</span>
+                <span class="n">pixels</span><span class="n">[</span><span class="n">index</span><span class="k">+</span><span class="m">3</span><span class="n">]</span> <span class="k">=</span> <span class="m">255</span> <span class="c">// Make the planet opaque</span>
+            <span class="n">}</span>
+        <span class="n">}</span>
+    <span class="n">}</span>
+
+    <span class="n">canvas</span><span class="n">.</span><span class="n">SetPixels</span><span class="n">(</span><span class="n">pixels</span><span class="n">)</span>                                                    <span class="c">// (9)</span>
+
+    <span class="k">return</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>Line (1) shows how you create a new simplex noise generator with a seed. Note that the simplex noise function is deterministic. The same inputs generate the same outputs if the seed is equal. Because we want differently looking planets we have to initialize the seed every time a planet is generated.</p>
+
+<p>In line (2) we initialize <code>canvas</code> with a white disc. The <code>genGradientDisc()</code> function generates a filled circle with a gradient color. If you create a disc with <code>density = 1</code> it will just be a completely opaque circle. We specify <code>density = 0.98</code> so the edge of the circle is a little softened. The canvas holds now a <em>pristine planet</em> that we can deform :)</p>
+
+<p>Because we have to inspect and change most pixels of the canvas one by one we extract them in line (3) for editing and later in line (9) put them back onto the canvas at once. This is the most performant way to do it albeit a little cumbersome. We have to access the red, green, blue and alpha values each on its own (see line (8) and the following).</p>
+
+<p>In line (4) we calculate a frequency for the following noise generation that yields <em>nice</em> results independent of the planet size. I really cannot explain much about this function other than that I tuned it by trial and error until I liked the result.</p>
+
+<p>We will skip lines (X), (Y) and (Z) for now and come back to it later. In Line (5) we calculate the index for the <code>r</code> value in the <em>pixels</em> slice. They layout follows this structure: <code>[r,g,b,a, r,g,b,a, ..]</code>. As you can see it is a very <em>raw</em> structure. The colors are not encapsulated in types but their color values are stored directly. In line (6) all color values for the pixel at <code>x, y</code> are retrieved.</p>
+
+<p>Then in line (7) the noise value is generated for the current pixel via the <code>layerNoise()</code> function. In line (8) and following the red, green, blue and alpha values are set for the pixel. Also each of the <em>r</em>, <em>g</em>, <em>b</em> components is brightened by a factor of <em>1.5</em>. I did this because the final planets are very small and need to be bright enough to be clearly visible. The next image shows a sample output of the described function.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977067-331a6688-68d0-11e8-9b4c-b922743f8965.png" alt="moon"/></p>
+
+<p>While I really like the result when looking at a large planet it doesn&#39;t look so great on small planets. I think the contrast is too extreme for small sizes. Now I could have dampened the contrast but I discovered another option. I added another layer of noise to the planet which generated horizontal stripes. This is shown in line (X) in the above function. You can see that the <em>x</em> parameter is always <em>0</em>. This way we generate a different value for different <em>y</em> values only. By uncommenting line (X) and (Y) and deleting line (Z) the final function is reached. In the resulting image below you can see a light stripe pattern merged with the previous moon pattern.</p>
+
+<p><img src="https://user-images.githubusercontent.com/791374/40977074-37f51e8c-68d0-11e8-8e26-cb01d824ed55.png" alt="planet"/></p>
+
+<p>I quite like the result. Keep in mind that every generated planet will look differently because of the seed randomization. It is also worth noting that too much detail will rather hurt the result because our planets are so small on the screen.</p>
+
+<blockquote>
+<p><strong>NOTE</strong>: Don&#39;t overdo things. If something is very small, you don&#39;t need a ton of details. If you see something only for a brief moment, you don&#39;t need a ton of details. Don&#39;t put too much energy into one little detail before tackling all the other challenges of your project.</p>
+</blockquote>
+<h2><a name="afterthought" class="anchor" href="#afterthought" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Afterthought</h2>
+
+<p>Chapter 2 has a better scope than chapter 1. This is the amount of content I will be aiming at in the future. Talking about the future.. the next tutorial will be about shaders with Pixel. However it may take a while until I finish it. I needed much longer for this tutorial than planned. My time currently is very scarce so please forgive me if it takes longer than expected! As always feedback is greatly appreciated.</p>
+</body></html></p>
+        <p><a class="b f6 link dim br2 ph3 pv2 mb2 dib white bg-orange" href="https://github.com/dbriemann/blog/issues/7">Discuss at Github</a></p>
+    </article>
+</main>
+
+	<footer class="border-box w-100 db dt-l mt5 mb4 bt bw1 b--orange pt2 f6">
+		<div class="db dtc-l v-mid w-100 w-50-l">
+			<span class="navy">&copy; 2018 David Linus Briemann</span>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="https://twitter.com/Raging_Dave">@Raging_Dave</a>
+			<span class="orange">/</span>
+			<a class="link blue no-underline" href="mailto:ragingdave@mailbox.org" target="_top">ragingdave@mailbox.org</a>
+		</div>
+		<div class="db dtc-l v-mid w-100 w-50-l tc tr-l">
+			<span class="navy">This blog is powered by</span>
+			<a class="no-underline blue" href="https://github.com/dbriemann/glyph">Glyph</a>
+		</div>
+		<div></div>
+	</footer>
+</body>
+
+</html>
