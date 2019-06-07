@@ -22,9 +22,9 @@ Name = "blog"
 
 # section Site contains all data that will be used in the statically generated html.
 [Site]
-Title = "Of Unproven Words And Code"
+Title = "0xDEADBEEF"
 Author = "David Linus Briemann"
-OneLineDesc = "A blog about solo game development and coding in general"
+OneLineDesc = "about bits and bytes and game development"
 Twitter = "Raging_Dave"
 Mail = "ragingdave@mailbox.org"
 # in the theme folder there is a theme.toml which specifies theme specific pages

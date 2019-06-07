@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Of Unproven Words And Code</title>
+  <title>0xDEADBEEF</title>
   <id>https://dbriemann.github.io/blog</id>
-  <updated>2018-06-07T13:08:45+02:00</updated>
-  <subtitle>A blog about solo game development and coding in general</subtitle>
+  <updated>2019-06-07T21:23:11+02:00</updated>
+  <subtitle>about bits and bytes and game development</subtitle>
   <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>
