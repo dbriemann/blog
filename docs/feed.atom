@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>0xDEADBEEF</title>
   <id>https://dbriemann.github.io/blog</id>
-  <updated>2019-06-07T21:23:11+02:00</updated>
-  <subtitle>about bits and bytes and game development</subtitle>
+  <updated>2020-04-13T22:17:20+02:00</updated>
+  <subtitle>off the loop thoughts</subtitle>
   <link href="https://dbriemann.github.io/blog"></link>
   <author>
     <name>David Linus Briemann</name>

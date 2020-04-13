@@ -24,7 +24,7 @@ Name = "blog"
 [Site]
 Title = "0xDEADBEEF"
 Author = "David Linus Briemann"
-OneLineDesc = "about bits and bytes and game development"
+OneLineDesc = "off the loop thoughts"
 Twitter = "Raging_Dave"
 Mail = "ragingdave@mailbox.org"
 # in the theme folder there is a theme.toml which specifies theme specific pages
